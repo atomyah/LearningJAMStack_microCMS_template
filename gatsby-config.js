@@ -8,6 +8,18 @@ module.exports = {
   plugins: [
     `gatsby-plugin-react-helmet`,
     {
+      resolve: `gatsby-source-microcms`,
+      options: {
+        apiKey: `L2GKnKmbGtTDocZYElrh8PnbfWKSxQyTYbsC`,
+        serviceId: `o274x29w9j`,
+        apis: [
+          {
+            endpoint: `information`,
+          },
+        ],
+      },
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
