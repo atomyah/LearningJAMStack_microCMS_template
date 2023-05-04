@@ -1,6 +1,5 @@
 {
   "name": "gatsby-starter-basic-bootstrap",
-  "package-name": "git+https://oauth2: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@github.com/WaiWai9999/LearningJAMStack_microCMS_template.git",
   "private": false,
   "description": "A very basic gatsby starter with react-bootstrap",
   "version": "0.1.0",
