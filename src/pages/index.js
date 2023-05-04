@@ -2,6 +2,7 @@ import React from "react";
 import { Row, Col, Card } from "react-bootstrap";
 import Layout from "../components/layout";
 import SEO from "../components/seo";
+import Contact from "../components/contact-home";
 import { Link, graphql } from "gatsby";
 import homeImg from "../images/home.jpg";
 import jigyo1Img from "../images/jigyo1.jpg";
