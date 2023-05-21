@@ -26,7 +26,7 @@ const Layout = ({ children }) => {
       <footer className="footer mt-auto py-3 bg-light text-black text-center">
         © {new Date().getFullYear()}, Built with
         {` `}
-        Atom Yah (このサイトは書籍「JAMStackを学ぼう Gatsby+microCMSでつくる企業サイト」用のサンプルです)
+        Devpediacode Developer Team
       </footer>
     </>
   );
