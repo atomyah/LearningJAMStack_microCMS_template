@@ -12,16 +12,6 @@ const Header = ({ siteTitle }) => (
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="mr-auto">
         <NavItem href="/about">
-          <Nav.Link as={Link} activeClassName="active" to="/about">
-            会社概要
-          </Nav.Link>
-        </NavItem>
-        <NavItem href="/about">
-          <Nav.Link as={Link} activeClassName="active" to="/jigyo">
-            事業内容
-          </Nav.Link>
-        </NavItem>
-        <NavItem href="/about">
           <Nav.Link as={Link} activeClassName="active" to="/information">
             インフォメーション
           </Nav.Link>
