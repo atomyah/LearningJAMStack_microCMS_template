@@ -23,7 +23,7 @@ const AboutPage = () => (
           <tbody>
             <tr>
               <td>社名</td>
-              <td>ヤー・スペーステクノロジー合同会社</td>
+              <td>Devpedia Code</td>
             </tr>
             <tr>
               <td>本社</td>
