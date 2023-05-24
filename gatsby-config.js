@@ -1,6 +1,6 @@
 module.exports = {
   siteMetadata: {
-    title: `Devpedia Code`,
+    title: `DevpediaCode`,
     description: `【架空の会社】宇宙工学と意識エネルギー循環研究でオンリーワンを目指します`,
     author: `@atomyah`,
     siteUrl: `https://yah-space.tech`,

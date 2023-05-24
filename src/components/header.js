@@ -2,10 +2,11 @@ import { Link } from "gatsby";
 import PropTypes from "prop-types";
 import React from "react";
 import { Navbar, Nav, NavItem } from "react-bootstrap";
+import "../style/common.scss";
 
 const Header = ({ siteTitle }) => (
-  <Navbar bg="light" variant="light" expand="lg">
-    <Navbar.Brand as={Link} href="/">
+  <Navbar className="navBg" bg="light" variant="light" expand="lg">
+    <Navbar.Brand as={Link} href="/" className="siteTitle">
       {siteTitle}
     </Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -31,7 +32,7 @@ Header.propTypes = {
 };
 
 Header.defaultProps = {
-  siteTitle: ``,
+  siteTitle: `DevpediaCode`,
 };
 
 export default Header;
