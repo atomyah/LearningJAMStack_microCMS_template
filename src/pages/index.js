@@ -3,7 +3,7 @@ import { Link, graphql } from "gatsby";
 import { Row, Col, Card, Table } from "react-bootstrap";
 import Layout from "../components/layout";
 import SEO from "../components/seo";
-import homeImg from "../images/home.jpg";
+import homeImg from "../images/Design1.png";
 import aiImg1 from "../images/AI.jpg";
 import aiImg2 from "../images/ai2.jpg";
 import webImg1 from "../images/WEB.jpg";
