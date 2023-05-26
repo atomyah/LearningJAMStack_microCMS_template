@@ -4,7 +4,6 @@ module.exports = {
     description: `IT/IOT/AIの技術メモや最新情報を共有`,
     author: `@Devpedia`,
     siteUrl: `https://devpediacode.com`,
-
   },
   plugins: [
     // sitemapプラグインの設定

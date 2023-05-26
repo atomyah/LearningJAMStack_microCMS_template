@@ -15,10 +15,18 @@ html {
   color: white;
   padding: 0.5rem;
 }
+.contact-title-obi {
+  background-color: #00BE7B;
+  color: white;
+  padding: 0.5rem;
+}
 .space {
   max-width: 960px;
   padding-top: 2rem;
 }
 .h1-font {
   font-size: 1.2rem;
+}
+td {
+  margin-top: 4rem; /* Adjust this value to match the height of your fixed header */
 }

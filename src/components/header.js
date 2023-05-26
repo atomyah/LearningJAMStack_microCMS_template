@@ -2,28 +2,26 @@ import { Link } from "gatsby";
 import PropTypes from "prop-types";
 import React from "react";
 import { Navbar, Nav, NavItem } from "react-bootstrap";
+import "../style/common.scss";
+import logo from "../images/logo2.png";
 
 const Header = ({ siteTitle }) => (
-  <Navbar bg="light" variant="light" expand="lg">
-    <Navbar.Brand as={Link} href="/">
-      {siteTitle}
+  <Navbar className="navBg" bg="light" variant="light" expand="lg">
+    <Navbar.Brand
+      as={Link}
+      href="/"
+      className="siteTitle"
+      style={{ width: "5%", height: "5%" }}
+    >
+      {/* {siteTitle} */}
+      <img src={logo} style={{ width: "100%", height: "100%" }} alt="Home" />
     </Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="mr-auto">
         <NavItem href="/about">
-          <Nav.Link as={Link} activeClassName="active" to="/about">
-            会社概要
-          </Nav.Link>
-        </NavItem>
-        <NavItem href="/about">
-          <Nav.Link as={Link} activeClassName="active" to="/jigyo">
-            事業内容
-          </Nav.Link>
-        </NavItem>
-        <NavItem href="/about">
           <Nav.Link as={Link} activeClassName="active" to="/information">
-            インフォメーション
+            記事一覧
           </Nav.Link>
         </NavItem>
         <NavItem href="/about">
@@ -41,7 +39,7 @@ Header.propTypes = {
 };
 
 Header.defaultProps = {
-  siteTitle: ``,
+  siteTitle: `DevpediaCode`,
 };
 
 export default Header;

@@ -1,0 +1,75 @@
+
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.content-container {
+  flex: 1;
+  overflow: auto;
+}
+
+.main-content {
+  margin-top: 12px; /* Adjust this value to match the height of your navbar */
+  flex: 1;
+  width: 100%;
+}
+.siteTitle {
+  color: #333;
+  font-size: 24px;
+  font-weight: bold;
+  /* Add any additional styling you want for the site title */
+}
+main {
+  height: auto !important;
+}
+.responsive-iframe {
+  width: 1140px !important;
+  height: 925px;
+  border: none;
+  margin-left: -15px;
+  margin-top: -31.5px;
+  }
+
+  .link-design {
+    background-color: cornflowerblue !important;
+  }
+
+  td.title{
+    color: white;
+    padding: 0.5rem;
+    max-width: 960px;
+    margin-top: 2rem;
+    background-color: cornflowerblue;
+    border: 1px solid rgba(0,0,0,.125);
+  }
+
+  td.article{
+    border: 1px solid rgba(0,0,0,.125);
+    width: 50%;
+  }
+
+  table.homePage{
+    border-collapse: collapse;
+    border-width: 1px;
+    margin-top: 25px;
+  }
+  .card {
+    display: flex;
+    position: unset !important;
+    flex-direction: column;
+    min-width: 0;
+    width: 100%;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+  }
+  nav.navBg{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    color: white;
+    //background-color: #cce6ff !important;
+  }
