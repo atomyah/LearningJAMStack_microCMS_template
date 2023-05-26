@@ -1,148 +1,118 @@
 import React from "react";
-import { Row, Col, Card } from "react-bootstrap";
+import { Link, graphql } from "gatsby";
+import { Row, Col, Card, Table } from "react-bootstrap";
 import Layout from "../components/layout";
 import SEO from "../components/seo";
-import Contact from "../components/contact-home";
-import { Link, graphql } from "gatsby";
-import homeImg from "../images/home.jpg";
-import jigyo1Img from "../images/jigyo1.jpg";
-import jigyo2Img from "../images/jigyo2.jpg";
-import jigyo3Img from "../images/jigyo3.jpg";
+import homeImg from "../images/Design1.png";
+import aiImg1 from "../images/AI.jpg";
+import aiImg2 from "../images/ai2.jpg";
+import webImg1 from "../images/WEB.jpg";
+import webImg2 from "../images/web2.jpg";
+import iotImg1 from "../images/IOT.jpg";
+import iotImg2 from "../images/iot2.jpg";
+import "../style/common.scss";
 
 const IndexPage = ({ data }) => (
   <Layout>
     <SEO title="Home" />
-    <Row style={{ maxWidth: `960px` }}>
-      <img src={homeImg} style={{ width: `100%`, marginBottom: `2rem` }} />
-    </Row>
-    <Row>
-      <Col xs={12} md={6} style={{ maxWidth: `480px` }}>
-        <Row>
-          <Col
-            style={{
-              backgroundColor: `cornflowerblue`,
-              color: `white`,
-              padding: `0.5rem`,
-            }}
-          ></Col>
-        </Row>
+    <Table className="homePage">
+      <tbody>
+        <tr>
+          <td colSpan="2">
+            <img src={homeImg} style={{ width: "100%" }} alt="Home" />
+          </td>
+        </tr>
+
         {data.allMicrocmsInformation.edges.map(({ node }) => (
-          <Row>
-            <Col style={{ padding: `0. 5 rem` }}>
-              <Link to={`/information/${node.id}`}>
-                {node.category.category}
-                {` `}
+          <React.Fragment key={node.id}>
+            <tr>
+              <td colSpan="2" className="title">
                 {node.title}
-              </Link>
-            </Col>
-          </Row>
+              </td>
+            </tr>
+            <tr>
+              <td className="article">
+                <Card className="card">
+                  {node.title === "IOT" && (
+                    <Card.Img
+                      variant="top"
+                      src={iotImg1}
+                      alt="IOT記事"
+                      style={{ height: "300px", objectFit: "cover" }}
+                    />
+                  )}
+                  {node.title === "AI" && (
+                    <Card.Img
+                      variant="top"
+                      src={aiImg1}
+                      alt="AI記事"
+                      style={{ height: "300px", objectFit: "cover" }}
+                    />
+                  )}
+                  {node.title === "WEB" && (
+                    <Card.Img
+                      variant="top"
+                      src={webImg1}
+                      alt="WEB記事"
+                      style={{ height: "300px", objectFit: "cover" }}
+                    />
+                  )}
+                  <Card.Body>
+                    <Card.Title style={{ fontSize: "1rem" }}>
+                      <Link
+                        to={`/information/${node.id}`}
+                        className="btn btn-primary link-design"
+                      >
+                        記事を読む
+                      </Link>
+                    </Card.Title>
+                  </Card.Body>
+                </Card>
+              </td>
+              <td className="article">
+                <Card style={{ width: "100%" }}>
+                  {node.title === "IOT" && (
+                    <Card.Img
+                      variant="top"
+                      src={iotImg2}
+                      alt="IOT記事"
+                      style={{ height: "300px", objectFit: "cover" }}
+                    />
+                  )}
+                  {node.title === "AI" && (
+                    <Card.Img
+                      variant="top"
+                      src={aiImg2}
+                      alt="AI記事"
+                      style={{ height: "300px", objectFit: "cover" }}
+                    />
+                  )}
+                  {node.title === "WEB" && (
+                    <Card.Img
+                      variant="top"
+                      src={webImg2}
+                      alt="WEB記事"
+                      style={{ height: "300px", objectFit: "cover" }}
+                    />
+                  )}
+                  <Card.Body>
+                    <Card.Title style={{ fontSize: "1rem" }}>
+                      <Link
+                        to={`/information/${node.id}`}
+                        className="btn btn-primary link-design"
+                      >
+                        記事を読む
+                      </Link>
+                    </Card.Title>
+                  </Card.Body>
+                </Card>
+              </td>
+            </tr>
+            <tr></tr>
+          </React.Fragment>
         ))}
-        <Row>
-          <Col style={{ padding: `0.5rem` }}>インフォメーション①</Col>
-        </Row>
-        <Row>
-          <Col style={{ padding: `0.5rem` }}>インフォメーション②</Col>
-        </Row>
-        <Row>
-          <Col style={{ padding: `0.5rem` }}>インフォメーション③</Col>
-        </Row>
-        <Row>
-          <Col style={{ padding: `0.5rem` }}>インフォメーション④</Col>
-        </Row>
-        <Row>
-          <Col style={{ padding: `0.5rem` }}>インフォメーション⑤</Col>
-        </Row>
-      </Col>
-      <Col xs={12} md={6} style={{ maxWidth: `480px` }}>
-        <Row>
-          <Col
-            style={{
-              backgroundColor: `cornflowerblue`,
-              color: `white`,
-              padding: `0.5rem`,
-            }}
-          >
-            IR情報
-          </Col>
-        </Row>
-        <Row>
-          <Col style={{ padding: `0.5rem` }}>決算報告</Col>
-        </Row>
-        <Row>
-          <Col style={{ padding: `0.5rem` }}>社長挨拶（動画）</Col>
-        </Row>
-        <Row>
-          <Col style={{ padding: `0.5rem` }}>広告スペース</Col>
-        </Row>
-        <Row>
-          <Col style={{ padding: `0.5rem` }}>広告スペース</Col>
-        </Row>
-      </Col>
-    </Row>
-    <Row>
-      <Col
-        style={{
-          backgroundColor: `cornflowerblue`,
-          color: `white`,
-          padding: `0.5rem`,
-          maxWidth: `960px`,
-          marginTop: `2rem`,
-        }}
-      >
-        事業内容
-      </Col>
-    </Row>
-    <Row>
-      <Col style={{ maxWidth: `960px` }}>
-        <Row>
-          <Col xs={6} md={4}>
-            <Card style={{ marginTop: `1rem` }}>
-              <Card.Img
-                variant="top"
-                src={jigyo1Img}
-                alt={`軌道上デブリ除去`}
-              />
-              <Card.Body>
-                <Card.Title style={{ fontSize: `1rem` }}>
-                  軌道上デブリ除去
-                </Card.Title>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col xs={6} md={4}>
-            <Card style={{ marginTop: `1rem` }}>
-              <Card.Img
-                variant="top"
-                src={jigyo2Img}
-                alt={`テレポーテーションゲート開設`}
-              />
-              <Card.Body>
-                <Card.Title style={{ fontSize: `1rem` }}>
-                  テレポーテーションゲート開設
-                </Card.Title>
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col xs={6} md={4}>
-            <Card style={{ marginTop: `1rem` }}>
-              <Card.Img
-                variant="top"
-                src={jigyo3Img}
-                alt={`業子力学による量子コントロール`}
-              />
-              <Card.Body>
-                <Card.Title style={{ fontSize: `1rem` }}>
-                  業子力学による量子コントロール
-                </Card.Title>
-              </Card.Body>
-            </Card>
-          </Col>
-        </Row>
-      </Col>
-    </Row>
-    <Row>
-      <Col style={{ maxWidth: `960px`, paddingTop: `3rem` }}></Col>
-    </Row>
+      </tbody>
+    </Table>
   </Layout>
 );
 

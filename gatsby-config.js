@@ -1,11 +1,23 @@
 module.exports = {
   siteMetadata: {
-    title: `ヤー・スペーステクノロジー`,
-    description: `【架空の会社】宇宙工学と意識エネルギー循環研究でオンリーワンを目指します`,
-    author: `@atomyah`,
-    siteUrl: `https://yah-space.tech`,
+    title: `DevpediaCode`,
+    description: `IT/IOT/AIの技術メモや最新情報を共有`,
+    author: `@Devpedia`,
+    siteUrl: `https://devpediacode.com`,
   },
   plugins: [
+    // sitemapプラグインの設定
+    `gatsby-plugin-sitemap`,
+    {
+      // canonical URLsプラグインの設定
+      resolve: `gatsby-plugin-canonical-urls`,
+      options: {
+        // サイトのURL
+        siteUrl: `https://devpediacode.com`,
+        // URLからクエリストリングを除去
+        stripQueryString: true,
+      },
+    },
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-microcms`,
