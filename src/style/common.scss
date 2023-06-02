@@ -8,6 +8,7 @@
 .content-container {
   flex: 1;
   overflow: auto;
+  padding-top: 25px;
 }
 
 .main-content {
@@ -36,13 +37,17 @@ main {
     background-color: cornflowerblue !important;
   }
 
-  td.title{
+  .title{
+    width: 800px;
+    height: 40px;
     color: white;
-    padding: 0.5rem;
-    max-width: 960px;
-    margin-top: 2rem;
-    background-color: cornflowerblue;
+    font-size: 20px;
+    background-color: #478CCC;
+  }
+
+  tr.borderStyle{
     border: 1px solid rgba(0,0,0,.125);
+    border-collapse: collapse;
   }
 
   td.article{
@@ -50,10 +55,10 @@ main {
     width: 50%;
   }
 
-  table.homePage{
+  .homePage{
     border-collapse: collapse;
     border-width: 1px;
-    margin-top: 25px;
+    // margin-top: 25px;
   }
   .card {
     display: flex;
@@ -72,4 +77,9 @@ main {
     width: 100%;
     color: white;
     //background-color: #cce6ff !important;
+  }
+
+  .with-border {
+    border: 1px solid #478CCC;
+    padding: 1rem;
   }

@@ -1,9 +1,9 @@
 import { Link } from "gatsby";
+import { Navbar, Nav, NavItem } from "react-bootstrap";
 import PropTypes from "prop-types";
 import React from "react";
-import { Navbar, Nav, NavItem } from "react-bootstrap";
+import logo from "../images/home-logo.png";
 import "../style/common.scss";
-import logo from "../images/logo2.png";
 
 const Header = ({ siteTitle }) => (
   <Navbar className="navBg" bg="light" variant="light" expand="lg">
@@ -13,19 +13,28 @@ const Header = ({ siteTitle }) => (
       className="siteTitle"
       style={{ width: "5%", height: "5%" }}
     >
-      {/* {siteTitle} */}
-      <img src={logo} style={{ width: "100%", height: "100%" }} alt="Home" />
+      <img src={logo} style={{ width: "80%", height: "60%" }} alt="Home" />
     </Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
       <Nav className="mr-auto">
         <NavItem href="/about">
-          <Nav.Link as={Link} activeClassName="active" to="/information">
+          <Nav.Link
+            as={Link}
+            style={{ align: "bottom" }}
+            activeClassName="active"
+            to="/information"
+          >
             記事一覧
           </Nav.Link>
         </NavItem>
         <NavItem href="/about">
-          <Nav.Link as={Link} activeClassName="active" to="/contact">
+          <Nav.Link
+            as={Link}
+            style={{ align: "bottom" }}
+            activeClassName="active"
+            to="/contact"
+          >
             お問い合わせ
           </Nav.Link>
         </NavItem>

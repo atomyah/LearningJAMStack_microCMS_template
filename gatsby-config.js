@@ -6,6 +6,18 @@ module.exports = {
     siteUrl: `https://devpediacode.com`,
   },
   plugins: [
+    // sitemapプラグインの設定
+    // `gatsby-plugin-sitemap`,
+    // {
+    //   // canonical URLsプラグインの設定
+    //   resolve: `gatsby-plugin-canonical-urls`,
+    //   options: {
+    //     // サイトのURL
+    //     siteUrl: `https://devpediacode.com`,
+    //     // URLからクエリストリングを除去
+    //     stripQueryString: true,
+    //   },
+    // },
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-microcms`,
@@ -37,7 +49,8 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        //icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        icon: "src/images/favicon.png",
       },
     },
     {
