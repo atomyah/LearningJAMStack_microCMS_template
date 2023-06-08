@@ -1,6 +1,5 @@
 import React from "react";
 import "../style/common.scss";
-import { Col, Row } from "react-bootstrap";
 import SEO from "../components/seo";
 
 const ContactPage = () => {
