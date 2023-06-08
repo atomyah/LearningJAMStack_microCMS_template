@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, graphql } from "gatsby";
+import { Link, graphql, navigate } from "gatsby";
 import { Row, Col, Card, Table } from "react-bootstrap";
 import SEO from "../components/seo";
 import Layout from "../components/layout";
@@ -7,16 +7,23 @@ import homeImg from "../images/home.png";
 import "../style/common.scss";
 
 const IndexPage = ({ data }) => {
+  const handleCategoryClick = category => {
+    // Navigate to the Information page with the selected category parameter
+    navigate("/information", {
+      state: { category: category },
+    });
+  };
+
   const articlesPerRow = 2;
 
-  const createArticleCards = articles => {
+  const createArticleCards = (articles, category) => {
     const articleCards = [];
 
     for (let i = 0; i < articles.length; i += articlesPerRow) {
       const row = articles.slice(i, i + articlesPerRow).map(({ node }) => (
         <Col key={node.id} md={6} style={{ marginBottom: "1rem" }}>
           <Card>
-            <Link to={`/information/${node.id}`}>
+            <Link to={`/information/${category}/${node.id}`}>
               <Card.Img
                 variant="top"
                 src={node.image.url}
@@ -27,7 +34,7 @@ const IndexPage = ({ data }) => {
                   {node.title}
                 </Card.Title>
                 <Link
-                  to={`/information/${node.id}`}
+                  to={`/information/${category}/${node.id}`}
                   className="btn btn-primary link-design"
                 >
                   記事を読む
@@ -44,6 +51,24 @@ const IndexPage = ({ data }) => {
         </Row>
       );
     }
+
+    articleCards.push(
+      <Row key="view-more">
+        <button
+          style={{
+            marginLeft: "30px",
+            fontSize: "16px",
+            fontWeight: "bold",
+            color: "#000000",
+            border: "none",
+            backgroundColor: "#ffffff",
+          }}
+          onClick={() => handleCategoryClick(category)}
+        >
+          もっと見る &gt;&gt;&gt;
+        </button>
+      </Row>
+    );
 
     return articleCards;
   };
@@ -68,22 +93,43 @@ const IndexPage = ({ data }) => {
             </td>
           </tr>
           <tr className="title borderStyle">
-            <td>IOT</td>
+            <td>
+              <button
+                className="title-btn"
+                onClick={() => handleCategoryClick("IOT")}
+              >
+                IOT
+              </button>
+            </td>
           </tr>
           <tr className="borderStyle">
-            <td colSpan="2">{createArticleCards(data.iot.edges)}</td>
+            <td colSpan="2">{createArticleCards(data.iot.edges, "IOT")}</td>
           </tr>
           <tr className="title borderStyle">
-            <td>WEB</td>
+            <td>
+              <button
+                className="title-btn"
+                onClick={() => handleCategoryClick("WEB")}
+              >
+                WEB
+              </button>
+            </td>
           </tr>
           <tr className="borderStyle">
-            <td colSpan="2">{createArticleCards(data.web.edges)}</td>
+            <td colSpan="2">{createArticleCards(data.web.edges, "WEB")}</td>
           </tr>
           <tr className="title borderStyle">
-            <td>AI</td>
+            <td>
+              <button
+                className="title-btn"
+                onClick={() => handleCategoryClick("AI")}
+              >
+                AI
+              </button>
+            </td>
           </tr>
           <tr className="borderStyle">
-            <td colSpan="2">{createArticleCards(data.ai.edges)}</td>
+            <td colSpan="2">{createArticleCards(data.ai.edges, "AI")}</td>
           </tr>
         </tbody>
       </Table>
@@ -92,6 +138,7 @@ const IndexPage = ({ data }) => {
 };
 
 export default IndexPage;
+
 export const query = graphql`
   query {
     iot: allMicrocmsInformation(
