@@ -41,8 +41,13 @@ main {
   .title{
     width: 800px;
     height: 40px;
-    color: white;
-    font-size: 20px;
+    background-color: #478CCC;
+  }
+
+  .title-btn{
+    font-size: 18px;
+    border: none;
+    color: #ffffff;
     background-color: #478CCC;
   }
 
@@ -114,4 +119,26 @@ main {
   
   .share-button-container button:focus {
     outline: none;
+  }
+
+  .category-link {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 0.5rem;
+    background-color: #f0f0f0;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .category-link.active {
+    background-color: #ccc;
+  }
+
+  .artical-title-font {
+    font-size: 1.5rem;
+  }
+
+  .margin-left-minus-15{
+    margin-left: -15px;
   }
