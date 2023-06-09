@@ -1,12 +1,27 @@
-// templates/info-post.js
-import React from "react";
-import { Link, graphql } from "gatsby";
+import React, { useState, useEffect } from "react";
+import { graphql } from "gatsby";
 import { Col, Row } from "react-bootstrap";
 import Layout from "../components/layout";
 import SEO from "../components/seo";
+import "../style/layout.scss";
+import "../style/common.scss";
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  TwitterShareButton,
+  TwitterIcon,
+  LineShareButton,
+  LineIcon,
+} from "react-share";
 
 const InformationPost = ({ data }) => {
-  const post = data.microcmsInformation; // ㊟ allMicrocmsInformationではない
+  const [shareUrl, setShareUrl] = useState("");
+
+  useEffect(() => {
+    setShareUrl(window.location.href);
+  }, []);
+
+  const post = data.microcmsInformation;
 
   return (
     <Layout>
@@ -15,12 +30,17 @@ const InformationPost = ({ data }) => {
         <Col className="space"></Col>
       </Row>
       <Row>
+        <Col className="space"></Col>
+      </Row>
+      <Row>
         <Col className="title-obj">
-          <h1 className="h1-font">{post.title}</h1>
+          <h1 className="artical-title-font margin-left-minus-15">
+            {post.title}
+          </h1>
         </Col>
       </Row>
       <Row>
-        <Col>
+        <Col className="margin-left-minus-15">
           {post.date}
           {``}
           {post.category.category}
@@ -35,6 +55,22 @@ const InformationPost = ({ data }) => {
       <Row>
         <Col className="space"></Col>
       </Row>
+      <div className="share-button-container">
+        <p>Share this page:</p>
+        <FacebookShareButton
+          url={shareUrl}
+          quote={"Dummy text!"}
+          hashtag="#muo"
+        >
+          <FacebookIcon size={32} round />
+        </FacebookShareButton>
+        <TwitterShareButton url={shareUrl} quote={"Dummy text!"} hashtag="#muo">
+          <TwitterIcon size={32} round />
+        </TwitterShareButton>
+        <LineShareButton url={shareUrl} quote={"Dummy text!"}>
+          <LineIcon size={32} round />
+        </LineShareButton>
+      </div>
     </Layout>
   );
 };
