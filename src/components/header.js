@@ -2,8 +2,9 @@ import { Link } from "gatsby";
 import { Navbar, Nav, NavItem } from "react-bootstrap";
 import PropTypes from "prop-types";
 import React from "react";
-import logo from "../images/home-logo.png";
+import logo from "../images/favicon100.png";
 import "../style/common.scss";
+import favicon200 from "../images/favicon200.png";
 
 const Header = ({ siteTitle }) => (
   <Navbar className="navBg" bg="light" variant="light" expand="lg">
@@ -13,7 +14,7 @@ const Header = ({ siteTitle }) => (
       className="siteTitle"
       style={{ width: "5%", height: "5%" }}
     >
-      <img src={logo} style={{ width: "80%", height: "60%" }} alt="Home" />
+      <img src={logo} style={{ width: "100%", height: "auto" }} alt="Home" />
     </Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
