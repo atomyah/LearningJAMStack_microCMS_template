@@ -39,7 +39,7 @@ main {
   }
 
   .title{
-    width: 800px;
+    //width: 800px;
     height: 40px;
     background-color: #478CCC;
   }
@@ -141,4 +141,10 @@ main {
 
   .margin-left-minus-15{
     margin-left: -15px;
+  }
+
+  .logo {
+    width: 50px !important;
+    height: 50px !important;
+    background-color: #478CCC;
   }
