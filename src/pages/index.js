@@ -21,8 +21,8 @@ const IndexPage = ({ data }) => {
 
     for (let i = 0; i < articles.length; i += articlesPerRow) {
       const row = articles.slice(i, i + articlesPerRow).map(({ node }) => (
-        <Col key={node.id} md={6} style={{ marginBottom: "1rem" }}>
-          <Card>
+        <Col key={node.id} md={6}>
+          <Card style={{ marginBottom: "1rem" }}>
             <Link to={`/information/${category}/${node.id}`}>
               <Card.Img
                 variant="top"
