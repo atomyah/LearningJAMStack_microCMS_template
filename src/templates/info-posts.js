@@ -12,6 +12,8 @@ import {
   TwitterIcon,
   LineShareButton,
   LineIcon,
+  EmailShareButton,
+  EmailIcon,
 } from "react-share";
 
 const InformationPost = ({ data }) => {
@@ -22,6 +24,7 @@ const InformationPost = ({ data }) => {
   }, []);
 
   const post = data.microcmsInformation;
+  const emailBody = `記事を共有します。\n`;
 
   return (
     <Layout>
@@ -70,6 +73,9 @@ const InformationPost = ({ data }) => {
         <LineShareButton url={shareUrl} quote={"Dummy text!"}>
           <LineIcon size={32} round />
         </LineShareButton>
+        <EmailShareButton url={shareUrl} subject={post.title} body={emailBody}>
+          <EmailIcon size={32} round />
+        </EmailShareButton>
       </div>
     </Layout>
   );
