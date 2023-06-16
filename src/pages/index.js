@@ -4,7 +4,7 @@ import { Row, Col, Card, Table } from "react-bootstrap";
 import SEO from "../components/seo";
 import Layout from "../components/layout";
 import homeImg from "../images/home.png";
-import "../style/common.scss";
+import "../style/layout.scss";
 
 const IndexPage = ({ data }) => {
   const handleCategoryClick = category => {
@@ -27,15 +27,15 @@ const IndexPage = ({ data }) => {
               <Card.Img
                 variant="top"
                 src={node.image.url}
-                style={{ height: "300px", objectFit: "cover" }}
+                className="index-category-img"
               />
               <Card.Body>
-                <Card.Title style={{ height: "40px", objectFit: "cover" }}>
+                <Card.Title className="index-category-title">
                   {node.title}
                 </Card.Title>
                 <Link
                   to={`/information/${category}/${node.id}`}
-                  className="btn btn-primary link-design"
+                  className="btn btn-primary back-link-design"
                 >
                   記事を読む
                 </Link>
@@ -55,14 +55,7 @@ const IndexPage = ({ data }) => {
     articleCards.push(
       <Row key="view-more">
         <button
-          style={{
-            marginLeft: "30px",
-            fontSize: "16px",
-            fontWeight: "bold",
-            color: "#000000",
-            border: "none",
-            backgroundColor: "#ffffff",
-          }}
+          className="btn-view-more"
           onClick={() => handleCategoryClick(category)}
         >
           もっと見る &gt;&gt;&gt;
@@ -76,26 +69,17 @@ const IndexPage = ({ data }) => {
   return (
     <Layout>
       <SEO title="Home" />
-      <Table>
-        <tbody
-          style={{
-            borderCollapse: "collapse",
-            borderColor: "cornflowerblue 1px",
-          }}
-        >
+      <Table style={{ paddingTop: "3%" }}>
+        <tbody className="index-table-body">
           <tr>
             <td colSpan="2">
-              <img
-                src={homeImg}
-                style={{ width: "102%", margin: "45px 0px 5px -12px" }}
-                alt="Home"
-              />
+              <img src={homeImg} className="home-img" alt="Home" />
             </td>
           </tr>
-          <tr className="title borderStyle">
+          <tr className="index-category borderStyle">
             <td>
               <button
-                className="title-btn"
+                className="index-category-btn"
                 onClick={() => handleCategoryClick("IOT")}
               >
                 IOT
@@ -105,10 +89,10 @@ const IndexPage = ({ data }) => {
           <tr className="borderStyle">
             <td colSpan="2">{createArticleCards(data.iot.edges, "IOT")}</td>
           </tr>
-          <tr className="title borderStyle">
+          <tr className="index-category borderStyle">
             <td>
               <button
-                className="title-btn"
+                className="index-category-btn"
                 onClick={() => handleCategoryClick("WEB")}
               >
                 WEB
@@ -118,10 +102,10 @@ const IndexPage = ({ data }) => {
           <tr className="borderStyle">
             <td colSpan="2">{createArticleCards(data.web.edges, "WEB")}</td>
           </tr>
-          <tr className="title borderStyle">
+          <tr className="index-category borderStyle">
             <td>
               <button
-                className="title-btn"
+                className="index-category-btn"
                 onClick={() => handleCategoryClick("AI")}
               >
                 AI

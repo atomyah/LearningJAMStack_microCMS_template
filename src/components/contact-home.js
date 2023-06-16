@@ -1,5 +1,5 @@
 import React from "react";
-import "../style/common.scss";
+import "../style/layout.scss";
 import SEO from "../components/seo";
 
 const ContactPage = () => {
