@@ -40,3 +40,17 @@ exports.createPages = ({ graphql, actions }) => {
     });
   });
 };
+// 末尾のスラッシュを削除するヘルパー関数
+const replacePath = path => (path === `/` ? path : path.replace(/\/$/, ``))
+
+// Gatsby の onCreatePage API を使用
+exports.onCreatePage = ({ page, actions }) => {
+  // actions オブジェクトから createRedirect 関数を取得
+  const { createRedirect } = actions
+
+  // ページのパスに '.html' が含まれていない場合、またはルートパス ('/') ではない場合に実行
+  if(!page.path.includes('.html') && page.path !== '/') {
+    // 末尾にスラッシュがあるパスからスラッシュを削除したパスへのリダイレクトを作成
+    createRedirect({ fromPath: `${page.path}/`, toPath: page.path, isPermanent: true })
+  }
+}
