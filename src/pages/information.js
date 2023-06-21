@@ -50,11 +50,6 @@ const InformationPage = ({ location, data }) => {
         </Col>
       </Row>
       <Table className="info">
-        {/* <Row>
-          <Col className="info-title-obj">
-            <h1 className="h1-font">記事一覧</h1>
-          </Col>
-        </Row> */}
         <Row>
           <Col className="space"></Col>
         </Row>
