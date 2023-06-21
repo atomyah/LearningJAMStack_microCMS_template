@@ -42,12 +42,11 @@ const InformationPost = ({ data }) => {
         </Row>
         <Row className="margin-left-5">
           <Col>
-            {"posted at "}
-            {post.date}
+            <div className="post-details">
+              <p>{`Posted at ${post.date}`}</p>
+              <p className="author">{post.author.author}</p>
+            </div>
           </Col>
-        </Row>
-        <Row className="margin-left-5">
-          <Col style={{ fontWeight: "300" }}>{post.author.author}</Col>
         </Row>
         <Row>
           <Col className="space"></Col>
