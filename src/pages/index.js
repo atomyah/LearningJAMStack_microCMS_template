@@ -72,9 +72,7 @@ const IndexPage = ({ data }) => {
       <Table style={{ paddingTop: "3%" }}>
         <tbody className="index-table-body">
           <tr>
-            <td colSpan="2">
-              <img src={homeImg} className="home-img" alt="Home" />
-            </td>
+            <img src={homeImg} className="home-img" alt="Home" />
           </tr>
           <tr className="index-category borderStyle">
             <td>
