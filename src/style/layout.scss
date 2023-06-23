@@ -24,8 +24,8 @@ nav.navBg{
   background-color: #478CCC;
 }
 .home-img{
-  width: 102%;
-  margin: 45px 0px 5px -12px;
+  width: 100%;
+  margin: 5.2% 0% 1.5% 0%;
 }
 .index-table-body{
   border-collapse: collapse;
@@ -114,8 +114,7 @@ Table.info {
 .info-title-obj {
   background-color: #478CCC;
   color: white;
-  padding: 0.5rem;
-  margin:4% 1.25% 0% 1.25%;
+  margin: 4% 1.25% 0% 1.25%;
 }
 
 .space {
@@ -142,6 +141,19 @@ Table.info-post {
  background-color: #EAF2F8;
 }
 
+.post-details {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.post-details p {
+  margin: 0 10px 0 0;
+}
+
+.author {
+  font-weight: 300;
+}
+
 /* ページ共通CSS */
 main {
   height: auto !important;
@@ -149,6 +161,7 @@ main {
 
 .h1-font {
   font-size: 1.2rem;
+  padding: 0.5rem 0rem 0.5rem 0rem;
 }
 
 td {
@@ -184,12 +197,11 @@ td.article{
 }
 
 .responsive-iframe {
-  width: 1140px !important;
+  width: 100% !important;
   height: 925px;
   border: none;
   color: #478CCC;
   padding: 0.5rem;
-  margin: 55px 0px 15px 0px;
   }
 
 .back-link-design {
@@ -261,6 +273,14 @@ td.article{
   flex: 0 0 auto;
 }
 
+.contact-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  margin-top: 3.5%;
+}
+
 /* Media Query for Mobile Devices */
 @media (max-width: 767px) {
   .share-button-container{
@@ -282,6 +302,21 @@ td.article{
   .details-share-button-container button {
     margin: 5px;
   }
-}
 
-/**/
+  .info-title-obj {
+    font-size: 1rem;
+    padding: 0.5rem;
+    margin: 4% 0% 0% 3.8%;
+    max-width: calc(100% - 7.5%); 
+  }
+
+  .contact-page {
+    height: auto;
+    padding: 2rem;
+  }
+
+  .responsive-iframe {
+    width: 100% !important;
+    max-width: 100%;
+  }
+}
