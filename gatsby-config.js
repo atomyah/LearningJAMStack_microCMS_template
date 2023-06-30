@@ -22,7 +22,7 @@ module.exports = {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         // The property ID; the tracking code won't be generated without it
-        trackingId: "G-Q247V1S1YT",
+        trackingId: "G-7RYQZ5JFJR",
         // Defines where to place the tracking script - `true` in the head and `false` in the body
         head: false,
         // Setting this parameter is optional
@@ -80,8 +80,8 @@ module.exports = {
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        //icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
-        icon: `src/images/favicon200.png`,
+        //icon: `src/images/gatsby-icon.ico`, // This path is relative to the root of the site.
+        icon: "src/images/favicon300.png",
       },
     },
     {
