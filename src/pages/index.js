@@ -1,34 +1,41 @@
 import React from "react";
-import { Link, graphql } from "gatsby";
+import { Link, graphql, navigate } from "gatsby";
 import { Row, Col, Card, Table } from "react-bootstrap";
 import SEO from "../components/seo";
 import Layout from "../components/layout";
 import homeImg from "../images/home.png";
-import "../style/common.scss";
+import "../style/layout.scss";
 
 const IndexPage = ({ data }) => {
+  const handleCategoryClick = category => {
+    // Navigate to the Information page with the selected category parameter
+    navigate("/information", {
+      state: { category: category },
+    });
+  };
+
   const articlesPerRow = 2;
 
-  const createArticleCards = articles => {
+  const createArticleCards = (articles, category) => {
     const articleCards = [];
 
     for (let i = 0; i < articles.length; i += articlesPerRow) {
       const row = articles.slice(i, i + articlesPerRow).map(({ node }) => (
-        <Col key={node.id} md={6} style={{ marginBottom: "1rem" }}>
-          <Card>
-            <Link to={`/information/${node.id}`}>
+        <Col key={node.id} md={6}>
+          <Card style={{ marginBottom: "1rem" }}>
+            <Link to={`/information/${category}/${node.id}`}>
               <Card.Img
                 variant="top"
                 src={node.image.url}
-                style={{ height: "300px", objectFit: "cover" }}
+                className="index-category-img"
               />
               <Card.Body>
-                <Card.Title style={{ height: "40px", objectFit: "cover" }}>
+                <Card.Title className="index-category-title">
                   {node.title}
                 </Card.Title>
                 <Link
-                  to={`/information/${node.id}`}
-                  className="btn btn-primary link-design"
+                  to={`/information/${category}/${node.id}`}
+                  className="btn btn-primary back-link-design"
                 >
                   記事を読む
                 </Link>
@@ -45,45 +52,66 @@ const IndexPage = ({ data }) => {
       );
     }
 
+    articleCards.push(
+      <Row key="view-more">
+        <button
+          className="btn-view-more"
+          onClick={() => handleCategoryClick(category)}
+        >
+          もっと見る &gt;&gt;&gt;
+        </button>
+      </Row>
+    );
+
     return articleCards;
   };
 
   return (
     <Layout>
       <SEO title="Home" />
-      <Table>
-        <tbody
-          style={{
-            borderCollapse: "collapse",
-            borderColor: "cornflowerblue 1px",
-          }}
-        >
+      <Table style={{ paddingTop: "3%" }}>
+        <tbody className="index-table-body">
           <tr>
-            <td colSpan="2">
-              <img
-                src={homeImg}
-                style={{ width: "102%", margin: "45px 0px 5px -12px" }}
-                alt="Home"
-              />
+            <img src={homeImg} className="home-img" alt="Home" />
+          </tr>
+          <tr className="index-category borderStyle">
+            <td>
+              <button
+                className="index-category-btn"
+                onClick={() => handleCategoryClick("IOT")}
+              >
+                IOT
+              </button>
             </td>
           </tr>
-          <tr className="title borderStyle">
-            <td>IOT</td>
+          <tr className="borderStyle">
+            <td colSpan="2">{createArticleCards(data.iot.edges, "IOT")}</td>
+          </tr>
+          <tr className="index-category borderStyle">
+            <td>
+              <button
+                className="index-category-btn"
+                onClick={() => handleCategoryClick("WEB")}
+              >
+                WEB
+              </button>
+            </td>
           </tr>
           <tr className="borderStyle">
-            <td colSpan="2">{createArticleCards(data.iot.edges)}</td>
+            <td colSpan="2">{createArticleCards(data.web.edges, "WEB")}</td>
           </tr>
-          <tr className="title borderStyle">
-            <td>WEB</td>
+          <tr className="index-category borderStyle">
+            <td>
+              <button
+                className="index-category-btn"
+                onClick={() => handleCategoryClick("AI")}
+              >
+                AI
+              </button>
+            </td>
           </tr>
           <tr className="borderStyle">
-            <td colSpan="2">{createArticleCards(data.web.edges)}</td>
-          </tr>
-          <tr className="title borderStyle">
-            <td>AI</td>
-          </tr>
-          <tr className="borderStyle">
-            <td colSpan="2">{createArticleCards(data.ai.edges)}</td>
+            <td colSpan="2">{createArticleCards(data.ai.edges, "AI")}</td>
           </tr>
         </tbody>
       </Table>
@@ -92,6 +120,7 @@ const IndexPage = ({ data }) => {
 };
 
 export default IndexPage;
+
 export const query = graphql`
   query {
     iot: allMicrocmsInformation(
