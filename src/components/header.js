@@ -2,7 +2,7 @@ import { Link } from "gatsby";
 import { Navbar, Nav, NavItem } from "react-bootstrap";
 import PropTypes from "prop-types";
 import React from "react";
-import logo from "../images/favicon100.png";
+import logo from "../images/favicon400.png";
 import "../style/layout.scss";
 
 const Header = ({ siteTitle }) => (
@@ -13,7 +13,7 @@ const Header = ({ siteTitle }) => (
       className="siteTitle"
       style={{ width: "5%", height: "5%" }}
     >
-      <img src={logo} style={{ width: "100%", height: "auto" }} alt="Home" />
+      <img src={logo} style={{ width: "50%", height: "auto" }} alt="Home" />
     </Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
