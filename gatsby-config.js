@@ -44,7 +44,7 @@ module.exports = {
         // Any additional optional fields
         sampleRate: 5,
         siteSpeedSampleRate: 10,
-        cookieDomain: "https://devpediacode.com/",
+        cookieDomain: "devpediacode.com",
         // defaults to false
         enableWebVitalsTracking: true,
       },
