@@ -49,6 +49,26 @@ module.exports = {
         enableWebVitalsTracking: true,
       },
    },
+   {
+    resolve: `gatsby-plugin-google-gtag`,
+    options: {
+      // GoogleのIDを設定
+      trackingIds: [
+        "G-7RYQZ5JFJR", // Google Analytics / GA
+      ],
+      // 追加設定を指定
+      gtagConfig: {
+        anonymize_ip: true,
+        cookie_expires: 0,
+      },
+      pluginConfig: {
+        // ページビューイベントをトリガー
+        head: false,
+        respectDNT: true,
+        exclude: ["/preview/**", "/do-not-track/me/too/"],
+      },
+    },
+  },
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-microcms`,
