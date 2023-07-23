@@ -15,7 +15,14 @@ nav.navBg{
   top: 0;
   width: 100%;
   color: white;
+  //justify-content: space-between; /* 追加 */
 }
+
+.siteTitle img {
+  display: flex;
+  align-items: center;
+  justify-content: start; /* ロゴを左寄せにする */
+  }
 
 /* index.js */
 .logo {
