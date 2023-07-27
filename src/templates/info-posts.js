@@ -3,7 +3,63 @@ import { graphql } from "gatsby";
 import { Table, Col, Row } from "react-bootstrap";
 import Layout from "../components/layout";
 import SEO from "../components/seo";
+import Prism from "prismjs";
 import "../style/layout.scss";
+import "prismjs/themes/prism.css";
+
+//import "prismjs/components/prism-arduino";
+//import "prismjs/components/prism-apache";
+
+import "prismjs/components/prism-c";
+import "prismjs/components/prism-css";
+import "prismjs/components/prism-csharp";
+
+// import "prismjs/components/prism-graphql";
+// import "prismjs/components/prism-groovy";
+
+// //import "prismjs/components/prism-html";
+//import "prismjs/components/prism-handlebars";
+import "prismjs/components/prism-haxe";
+import "prismjs/components/prism-haskell";
+
+import "prismjs/components/prism-ini";
+
+import "prismjs/components/prism-json";
+import "prismjs/components/prism-java";
+import "prismjs/components/prism-javascript";
+
+import "prismjs/components/prism-markdown";
+
+import "prismjs/components/prism-objectivec";
+
+// import "prismjs/components/prism-php";
+// //import "prismjs/components/prism-plaintext";
+// //import "prismjs/components/prism-postgresql";
+import "prismjs/components/prism-powershell";
+import "prismjs/components/prism-python";
+
+import "prismjs/components/prism-ruby";
+import "prismjs/components/prism-rust";
+
+import "prismjs/components/prism-scss";
+import "prismjs/components/prism-sql";
+
+import "prismjs/components/prism-typescript";
+
+// import "prismjs/components/prism-vbnet";
+// //import "prismjs/components/prism-vbscript";
+
+import "prismjs/components/prism-yaml";
+
+import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+
+import {
+  dark,
+  darcula,
+  dracula,
+  vs2015,
+} from "react-syntax-highlighter/dist/esm/styles/prism";
+
 import {
   FacebookShareButton,
   FacebookIcon,
@@ -18,9 +74,66 @@ import {
 const InformationPost = ({ data }) => {
   const [shareUrl, setShareUrl] = useState("");
 
+  const customDarcula = {
+    ...darcula,
+    'code[class*="language-"]': {
+      ...darcula['code[class*="language-"]'],
+      textShadow: "none",
+      fontSize: "16px", // Default font size for desktop
+    },
+    "@media (max-width: 767px)": {
+      'code[class*="language-"]': {
+        fontSize: "14px", // Custom font size for mobile devices
+      },
+    },
+  };
+
   useEffect(() => {
     setShareUrl(window.location.href);
+    Prism.highlightAll();
   }, []);
+
+  const parseContent = () => {
+    const regex = /(<pre><code\b[^>]*>[\s\S]*?<\/code><\/pre>)|(<p\b[^>]*>[\s\S]*?<\/p>)/gi;
+    const matches = post.body.match(regex);
+    const parsedLines = [];
+
+    console.log("matches:", matches);
+
+    if (matches) {
+      matches.forEach((match, index) => {
+        console.log("match:", match);
+        if (match.startsWith("<pre><code")) {
+          // Extract content within <code> tags
+          const htmlString = match.replace(/<\/?pre>|<\/?code>/gi, "");
+          const parser = new DOMParser();
+          const doc = parser.parseFromString(htmlString, "text/html");
+
+          // Extract language from code block comment, e.g., // language: javascript
+          const codeElement = doc.querySelector("code");
+          const classAttribute = codeElement?.getAttribute("class") || "";
+          const language = classAttribute.replace("language-", "");
+
+          const codeContent = doc.documentElement.textContent;
+
+          parsedLines.push(
+            <SyntaxHighlighter
+              key={index}
+              language={language}
+              style={language === " " ? "javascript" : customDarcula}
+            >
+              {codeContent}
+            </SyntaxHighlighter>
+          );
+        } else if (match.startsWith("<p")) {
+          parsedLines.push(
+            <p key={index} dangerouslySetInnerHTML={{ __html: match }} />
+          );
+        }
+      });
+    }
+    return parsedLines;
+  };
 
   const post = data.microcmsInformation;
   const emailBody = `記事を共有します。\n`;
@@ -34,71 +147,69 @@ const InformationPost = ({ data }) => {
       <Row>
         <Col className="space"></Col>
       </Row>
-      <Table className="info-post">
-        <Row className="margin-left-5">
-          <Col className="title-obj">
-            <h1 className="artical-title-font">{post.title}</h1>
-          </Col>
-        </Row>
-        <Row className="margin-left-5">
-          <Col>
-            <div className="post-details">
-              <p>{`Posted at ${post.date}`}</p>
-              <p className="author">{post.author.author}</p>
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col className="space"></Col>
-        </Row>
-        <Row className="margin-left-15">
-          <div dangerouslySetInnerHTML={{ __html: post.body }} />
-        </Row>
-        <Row>
-          <Col className="space"></Col>
-        </Row>
-        <Row className="back-link-row">
-          <Col>
-            <div className="details-share-button-container d-flex align-items-center justify-content-start">
-              <p
-                style={{
-                  padding: "5% 0% 0% 0%",
-                  marginRight: "1rem",
-                  marginLeft: "1rem",
-                }}
-              >
-                Share:
-              </p>
-              <FacebookShareButton
-                url={shareUrl}
-                className="Demo__some-network__share-button"
-                quote={"Dummy text!"}
-                hashtag="#muo"
-              >
-                <FacebookIcon size={32} round />
-              </FacebookShareButton>
+      <div className="table-container">
+        <Table className="info-post">
+          <Row className="margin-left-5">
+            <Col className="title-obj">
+              <h1 className="artical-title-font">{post.title}</h1>
+            </Col>
+          </Row>
+          <Row className="margin-left-5">
+            <Col>
+              <div className="post-details">
+                <p>{`Posted at ${post.date}`}</p>
+              </div>
+            </Col>
+          </Row>
+          <Row className="adjust-Row">
+            <Col className="space"></Col>
+          </Row>
+          <Row className="post-body">{parseContent(customDarcula)}</Row>
+          <Row>
+            <Col className="space"></Col>
+          </Row>
+          <Row className="back-link-row">
+            <Col>
+              <div className="details-share-button-container d-flex align-items-center justify-content-start">
+                <span
+                  style={{
+                    marginRight: "1rem",
+                    marginLeft: "1rem",
+                  }}
+                >
+                  Share:
+                </span>
+                <FacebookShareButton
+                  url={shareUrl}
+                  className="Demo__some-network__share-button"
+                  quote={"Dummy text!"}
+                  hashtag="#muo"
+                >
+                  <FacebookIcon size={32} round />
+                </FacebookShareButton>
 
-              <TwitterShareButton
-                url={shareUrl}
-                quote={"Dummy text!"}
-                hashtag="#muo"
-              >
-                <TwitterIcon size={32} round />
-              </TwitterShareButton>
-              <LineShareButton url={shareUrl} quote={"Dummy text!"}>
-                <LineIcon size={32} round />
-              </LineShareButton>
-              <EmailShareButton
-                url={shareUrl}
-                subject="Devpediacodeの記事一覧共有"
-                body={emailBody}
-              >
-                <EmailIcon size={32} round />
-              </EmailShareButton>
-            </div>
-          </Col>
-        </Row>
-      </Table>
+                <TwitterShareButton
+                  url={shareUrl}
+                  quote={"Dummy text!"}
+                  hashtag="#muo"
+                >
+                  <TwitterIcon size={32} round />
+                </TwitterShareButton>
+                <LineShareButton url={shareUrl} quote={"Dummy text!"}>
+                  <LineIcon size={32} round />
+                </LineShareButton>
+                <EmailShareButton
+                  url={shareUrl}
+                  subject="Devpediacodeの記事一覧共有"
+                  body={emailBody}
+                >
+                  <EmailIcon size={32} round />
+                </EmailShareButton>
+              </div>
+            </Col>
+          </Row>
+        </Table>
+      </div>
     </Layout>
   );
 };
