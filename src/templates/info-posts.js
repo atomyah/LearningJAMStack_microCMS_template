@@ -87,42 +87,45 @@ const InformationPost = ({ data }) => {
   }, []);
 
   const parseContent = () => {
-    const regex = /(<pre><code\b[^>]*>[\s\S]*?<\/code><\/pre>)|(<p\b[^>]*>[\s\S]*?<\/p>)/gi;
-    const matches = post.body.match(regex);
-    const parsedLines = [];
+    if (typeof window !== `undefined`) {
+      const regex = /(<pre><code\b[^>]*>[\s\S]*?<\/code><\/pre>)|(<p\b[^>]*>[\s\S]*?<\/p>)/gi;
+      const matches = post.body.match(regex);
+      const parsedLines = [];
 
-    if (matches) {
-      matches.forEach((match, index) => {
-        if (match.startsWith("<pre><code")) {
-          // Extract content within <code> tags
-          const htmlString = match.replace(/<\/?pre>|<\/?code>/gi, "");
-          const parser = new DOMParser();
-          const doc = parser.parseFromString(htmlString, "text/html");
+      if (matches) {
+        matches.forEach((match, index) => {
+          if (match.startsWith("<pre><code")) {
+            // Extract content within <code> tags
+            const htmlString = match.replace(/<\/?pre>|<\/?code>/gi, "");
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlString, "text/html");
 
-          // Extract language from code block comment, e.g., // language: javascript
-          const codeElement = doc.querySelector("code");
-          const classAttribute = codeElement?.getAttribute("class") || "";
-          const language = classAttribute.replace("language-", "");
+            // Extract language from code block comment, e.g., // language: javascript
+            const codeElement = doc.querySelector("code");
+            const classAttribute = codeElement?.getAttribute("class") || "";
+            const language = classAttribute.replace("language-", "");
 
-          const codeContent = doc.documentElement.textContent;
+            const codeContent = doc.documentElement.textContent;
 
-          parsedLines.push(
-            <SyntaxHighlighter
-              key={index}
-              language={language}
-              style={language === " " ? "javascript" : customDarcula}
-            >
-              {codeContent}
-            </SyntaxHighlighter>
-          );
-        } else if (match.startsWith("<p")) {
-          parsedLines.push(
-            <p key={index} dangerouslySetInnerHTML={{ __html: match }} />
-          );
-        }
-      });
+            parsedLines.push(
+              <SyntaxHighlighter
+                key={index}
+                language={language}
+                style={language === " " ? "javascript" : customDarcula}
+              >
+                {codeContent}
+              </SyntaxHighlighter>
+            );
+          } else if (match.startsWith("<p")) {
+            parsedLines.push(
+              <p key={index} dangerouslySetInnerHTML={{ __html: match }} />
+            );
+          }
+        });
+      }
+
+      return parsedLines;
     }
-    return parsedLines;
   };
 
   const post = data.microcmsInformation;
