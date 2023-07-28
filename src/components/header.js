@@ -7,13 +7,8 @@ import "../style/layout.scss";
 
 const Header = ({ siteTitle }) => (
   <Navbar className="navBg fixed-top" bg="light" variant="light" expand="lg">
-    <Navbar.Brand
-      as={Link}
-      href="/"
-      className="siteTitle"
-      style={{ width: "5%", height: "5%" }}
-    >
-      <img src={logo} style={{ width: "50%", height: "auto" }} alt="Home" />
+    <Navbar.Brand as={Link} href="/" className="siteTitle">
+      <img src={logo} alt="Home" />
     </Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav">
@@ -33,8 +28,7 @@ const Header = ({ siteTitle }) => (
             as={Link}
             style={{ align: "bottom" }}
             activeClassName="active"
-            to="/contact"
-          >
+            to="/contact">
             お問い合わせ
           </Nav.Link>
         </NavItem>
