@@ -232,11 +232,11 @@ tr.borderStyle{
 //social media share button
 .share-button-container {
   display: flex;
-  width: 50%;
+  width: 51%;
   align-items: center;
   justify-content: center;
   background-color: #fff;
-  padding: 0% 0.3% 0% 0%;
+  padding: 0% 2.5% 0% 0%;
   border-radius: 10px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
 }
@@ -293,6 +293,7 @@ tr.borderStyle{
     height:50%;
   }
   .table-container {
+    margin-top: -30px;
     overflow-x: auto;
     font-size: 14px;
   }
@@ -307,16 +308,16 @@ tr.borderStyle{
     margin: 0px;
   }
   .post-details-table .back-link-design{
-    width: 114%;
+    width: 127%;
     margin: 5px 0px 0px -15px;
   }
   .info .back-link-design{
-    width: 37%;
+    width: 40%;
     margin: 5px 0px 0px -10px;
   }
   .info .share-button-container{
     width: 100%;
-    margin: -22px 90px 0px -10px;
+    margin: -22px 70px 0px -10px;
   }
   .details-share-button-container {
     width: 109%;
@@ -343,6 +344,9 @@ tr.borderStyle{
   .contact-page {
     height: auto;
     padding: 2rem;
+  }
+  .content-container{
+    padding-top: 11.5%;
   }
   .content-wrapper {
     max-width: 90%; 
