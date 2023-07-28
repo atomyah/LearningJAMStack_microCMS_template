@@ -40,8 +40,10 @@ nav.navBg{
   object-fit: cover;
 }
 .index-category-img {
+  //height: 300px;
   height: 300px;
-  object-fit: cover;
+  //object-fit: cover;
+  width:100%;
 }
 .index-category-btn{
   font-size: 18px;
@@ -96,135 +98,118 @@ Table.info {
 .info-category-link.active {
   background-color: #ccc;
 }
-
 .info-row {
   margin: 0px 10px 0px 10px !important;
 }
-
 .info-row-style {
   margin: 0px 15px 0px 15px;
   border: 1px solid rgba(0,0,0,.125);
   border-collapse: collapse;
 }
-  
 .info-button-row {
   margin: 0px 10px 0px 25px !important;
 }
-
 .info-title-obj {
   background-color: #478CCC;
   color: white;
   margin: 4% 1.25% 0% 1.25%;
 }
-
 .space {
   max-width: 960px;
   padding-top: 2rem;
 }
 
 /* info-post.js */
-.artical-title-font {
+.table-container {
+  max-width: 100%;
+}
+.post-details-title-font {
   font-size: 2.5rem;
   font-weight:500;
 }
-
-.post-body{
-  margin-left: 15px;
-  display: block;
-}
-
-.margin-left-5{
-  margin-left: 5px;
-}
-
-.info-post p {
-  //width: 100%; /* Set paragraphs to take the full width */
-  width:auto;
-}
-
-.info-post pre {
-  width: auto; /* Set code blocks to take the full width */
-  margin: 0; /* Remove any default margins */
-  // background-color: #000000 !important;
-  color: #fff !important;
-}
-
 .post-details {
   display: flex;
   flex-wrap: wrap;
 }
-
 .post-details p {
   margin: 0 10px 0 0;
 }
-
-.author {
-  font-weight: 300;
+.post-details-body {
+  margin-left: 15px;
+  display: block;
 }
-
+.post-details-table p {
+  width:auto;
+}
+.post-details-table pre {
+  width: auto; 
+  margin: 0; 
+  color: #fff !important;
+}
 span.token.operator {
   background-color: transparent !important;
 }
+.margin-left-5 {
+  margin-left: 5px;
+}
 
+/* information.js */
+.contact-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+  margin-top: 3.5%;
+}
 
 /* ページ共通CSS */
 main {
   height: auto !important;
 }
-
 .h1-font {
   font-size: 1.2rem;
   padding: 0.5rem 0rem 0.5rem 0rem;
 }
-
 td {
   margin-top: 4rem; 
 }
-
-tr.borderStyle{
-  border: 1px solid rgba(0,0,0,.125);
-  border-collapse: collapse;
-}
-
 td.article{
   border: 1px solid rgba(0,0,0,.125);
   width: 50%;
 }
-
+tr.borderStyle{
+  border: 1px solid rgba(0,0,0,.125);
+  border-collapse: collapse;
+}
 .content-container {
   flex: 1;
   overflow: auto;
   padding-top: 2.5%;
 }
-
-.main-content {
-  margin-top: 12px;
-  flex: 1;
-  width: 100%;
-}
-
 .layout-container {
   display: flex;
   flex-direction: column;
   height: 100vh;
 }
-
+.main-content {
+  margin-top: 12px;
+  flex: 1;
+  width: 100%;
+}
 .responsive-iframe {
   width: 100% !important;
   height: 925px;
   border: none;
   color: #478CCC;
   padding: 0.5rem;
-  }
-
+}
 .back-link-design {
+  margin-left: 10px;
   background-color: cornflowerblue !important;
 }
-
 .back-link-row {
   margin: 15px 0px 15px -8px;
 }
-
 .card {
   display: flex;
   position: unset !important;
@@ -248,147 +233,131 @@ td.article{
   border-radius: 10px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
 }
-
 .share-button-container p {
   margin-right: 10px;
   font-size: 14px;
   font-weight: bold;
 }
-
 .share-button-container button {
   border: none;
   background: none;
   margin: 0 5px;
   cursor: pointer;
 }
-
 .share-button-container button:focus {
   outline: none;
 }
-
 .share-btn-card-body {
   display: flex;
   justify-content: flex-end;
 }
-
 .details-share-button-container {
   display: flex;
   align-items: center;
-  width: 22%;
-  justify-content: flex-start;
+  width: 46%;
+  gap:10px;
   background-color: #fff;
   padding: 1% 1% 1% 1%;
+  margin: 0px -32px 0px 0px;
   border-radius: 10px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
 }
-
 .details-share-button-container > * {
   flex: 0 0 auto;
 }
-
-.contact-page {
+.d-flex {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: auto;
-  margin-top: 3.5%;
 }
-.table-container {
-  //overflow-x: auto;
-  max-width: 100%;
+.justify-content-end {
+  justify-content: flex-end;
 }
 
 /* Media Query for Mobile Devices */
 @media (max-width: 767px) {
+  Table.post-details-table td {
+    padding: 5px;
+  }
+  Table.post-details-table th,
+  Table.post-details-table td {
+    margin: 0;
+  }
+  .index-category-img {
+    width: 100%;
+    height:50%;
+  }
   .table-container {
     overflow-x: auto;
     font-size: 14px;
   }
-
-  Table.info-post td {
-    padding: 5px;
-  }
-
-  Table.info-post th,
-  Table.info-post td {
-    margin: 0;
-  }
-
-  .artical-title-font {
-    font-size: 1.5rem;
+  .post-details-title-font {
+    font-size: 1.4rem;
     font-weight:300;
   }
-
-  .post-body{
+  .post-details-body{
     margin: 0px;
   }
-
   .row {
     margin: 0px;
   }
-
+  .post-details-table .back-link-design{
+    width: 114%;
+    margin: 5px 0px 0px -15px;
+  }
+  .info .back-link-design{
+    width: 37%;
+    margin: 5px 0px 0px -10px;
+  }
+  .info .share-button-container{
+    width: 100%;
+    margin: -22px 90px 0px -10px;
+  }
+  .details-share-button-container {
+    width: 109%;
+    gap: 0px;
+    margin: 0px -12px 0px 0px;
+  }
   .share-button-container{
     width: 100%;
+    margin: -22px 50px 0px 0px;
   }
-
-  .details-share-button-container {
-    width: 80%;
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-left: 32px;
-  }
-
   .share-button-container p {
     text-align: center;
     margin-right: 0;
   }
-
   .share-button-container button,
   .details-share-button-container button {
     margin: 5px;
   }
-
   .info-title-obj {
     font-size: 1rem;
     padding: 0.5rem;
-    margin: 4% 0% 0% 3.8%;
-    max-width: calc(100% - 7.5%); 
+    margin: 4% 0% 0% 0%;
   }
-
   .contact-page {
     height: auto;
     padding: 2rem;
   }
-
+  .content-wrapper {
+    max-width: 90%; 
+    margin: 0 auto;
+  }
   .responsive-iframe {
     width: 100% !important;
     max-width: 100%;
   }
-
-  .content-wrapper {
-    max-width: 90%; /* Adjust the width as needed */
-    margin: 0 auto;
-  }
-
-  /* Flex container for paragraphs and code blocks */
-  .info-post {
+  .post-details-table {
     display: block;
     flex-wrap: wrap;
   }
-
-  /* Paragraphs (p) within the flex container */
-  .info-post p {
+  .post-details-table p {
     margin: 0;
     padding: 0.5rem;
   }
-
-  /* Code blocks (pre) within the flex container */
-  .info-post pre {
+  .post-details-table pre {
     overflow-x: auto;
     white-space: pre-wrap;
     word-wrap: break-word;
   }
-
   .adjust-Row {
     width: 0px;
     height: 0px;

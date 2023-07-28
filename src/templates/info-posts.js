@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { graphql } from "gatsby";
+import { Link, graphql } from "gatsby";
 import { Table, Col, Row } from "react-bootstrap";
 import Layout from "../components/layout";
 import SEO from "../components/seo";
@@ -50,15 +50,8 @@ import "prismjs/components/prism-typescript";
 // //import "prismjs/components/prism-vbscript";
 
 import "prismjs/components/prism-yaml";
-
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-
-import {
-  dark,
-  darcula,
-  dracula,
-  vs2015,
-} from "react-syntax-highlighter/dist/esm/styles/prism";
+import { darcula } from "react-syntax-highlighter/dist/esm/styles/prism";
 
 import {
   FacebookShareButton,
@@ -79,11 +72,11 @@ const InformationPost = ({ data }) => {
     'code[class*="language-"]': {
       ...darcula['code[class*="language-"]'],
       textShadow: "none",
-      fontSize: "16px", // Default font size for desktop
+      fontSize: "16px",
     },
     "@media (max-width: 767px)": {
       'code[class*="language-"]': {
-        fontSize: "14px", // Custom font size for mobile devices
+        fontSize: "14px",
       },
     },
   };
@@ -98,11 +91,8 @@ const InformationPost = ({ data }) => {
     const matches = post.body.match(regex);
     const parsedLines = [];
 
-    console.log("matches:", matches);
-
     if (matches) {
       matches.forEach((match, index) => {
-        console.log("match:", match);
         if (match.startsWith("<pre><code")) {
           // Extract content within <code> tags
           const htmlString = match.replace(/<\/?pre>|<\/?code>/gi, "");
@@ -148,10 +138,10 @@ const InformationPost = ({ data }) => {
         <Col className="space"></Col>
       </Row>
       <div className="table-container">
-        <Table className="info-post">
+        <Table className="post-details-table">
           <Row className="margin-left-5">
             <Col className="title-obj">
-              <h1 className="artical-title-font">{post.title}</h1>
+              <h1 className="post-details-title-font">{post.title}</h1>
             </Col>
           </Row>
           <Row className="margin-left-5">
@@ -164,17 +154,22 @@ const InformationPost = ({ data }) => {
           <Row className="adjust-Row">
             <Col className="space"></Col>
           </Row>
-          <Row className="post-body">{parseContent(customDarcula)}</Row>
+          <Row className="post-details-body">{parseContent(customDarcula)}</Row>
           <Row>
             <Col className="space"></Col>
           </Row>
           <Row className="back-link-row">
             <Col>
-              <div className="details-share-button-container d-flex align-items-center justify-content-start">
+              <Link to="/" className="btn btn-primary back-link-design">
+                Back to Home
+              </Link>
+            </Col>
+            <Col className="d-flex justify-content-end">
+              <div className="details-share-button-container d-flex align-items-center">
                 <span
                   style={{
-                    marginRight: "1rem",
-                    marginLeft: "1rem",
+                    marginRight: "0.5rem",
+                    marginLeft: "0.5rem",
                   }}
                 >
                   Share:
