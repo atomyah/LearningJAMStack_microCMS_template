@@ -49,6 +49,7 @@ module.exports = {
         enableWebVitalsTracking: true,
       },
    },
+    /*
    {
     resolve: `gatsby-plugin-google-gtag`,
     options: {
@@ -69,6 +70,7 @@ module.exports = {
       },
     },
   },
+   */
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-microcms`,
