@@ -144,6 +144,8 @@ Table.info {
 .post-details-body {
   margin-left: 15px;
   display: block;
+  //max-width: 1100px;
+  //overflow: auto;
 }
 .post-details-table p {
   width:auto;
@@ -158,6 +160,16 @@ span.token.operator {
 }
 .margin-left-5 {
   margin-left: 5px;
+}
+.imgContainer{
+  margin: 0px; 
+  padding: 0px;
+  width:100%;
+  height:auto;
+}
+.imgStyle{
+  width: 100%;
+  height: auto;
 }
 
 /* information.js */
@@ -281,6 +293,10 @@ tr.borderStyle{
 
 /* Media Query for Mobile Devices */
 @media (max-width: 767px) {
+  .home-img{
+    margin: 1.2% 0% 1.5% 0%;
+  }
+
   Table.post-details-table td {
     padding: 5px;
   }
@@ -338,8 +354,8 @@ tr.borderStyle{
   }
   .info-title-obj {
     font-size: 1rem;
-    padding: 0.5rem;
-    margin: 4% 0% 0% 0%;
+    padding: 0.4rem;
+    margin: 3% 0% 0% 0%;
   }
   .contact-page {
     height: auto;
@@ -372,6 +388,19 @@ tr.borderStyle{
   .adjust-Row {
     width: 0px;
     height: 0px;
+  }
+ 
+  .imgContainer {
+    margin: 0px;
+    padding: 0px;
+    height: auto; 
+    overflow: scroll; 
+  }
+  
+  .imgStyle {
+    width: auto; 
+    height:auto;
+    display: block;
   }
 }
 

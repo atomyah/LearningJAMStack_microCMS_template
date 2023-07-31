@@ -88,7 +88,8 @@ const InformationPost = ({ data }) => {
 
   const parseContent = () => {
     if (typeof window !== `undefined`) {
-      const regex = /(<pre><code\b[^>]*>[\s\S]*?<\/code><\/pre>)|(<p\b[^>]*>[\s\S]*?<\/p>)/gi;
+      //const regex = /(<pre><code\b[^>]*>[\s\S]*?<\/code><\/pre>)|(<p\b[^>]*>[\s\S]*?<\/p>)/gi;
+      const regex = /(<pre><code\b[^>]*>[\s\S]*?<\/code><\/pre>)|(<p\b[^>]*>[\s\S]*?<\/p>)|(<figure\b[^>]*>[\s\S]*?<img\b[^>]*>[\s\S]*?<\/figure>)/gi;
       const matches = post.body.match(regex);
       const parsedLines = [];
 
@@ -103,15 +104,26 @@ const InformationPost = ({ data }) => {
             // Extract language from code block comment, e.g., // language: javascript
             const codeElement = doc.querySelector("code");
             const classAttribute = codeElement?.getAttribute("class") || "";
-            const language = classAttribute.replace("language-", "");
+            let language =
+              classAttribute?.replace("language-", "") ?? "javascript";
+
+            console.log(`language: ${language}`);
 
             const codeContent = doc.documentElement.textContent;
+            if (
+              language === "routeros" ||
+              language === "" ||
+              language === " " ||
+              language === undefined
+            ) {
+              language = "javascript";
+            }
 
             parsedLines.push(
               <SyntaxHighlighter
                 key={index}
                 language={language}
-                style={language === " " ? "javascript" : customDarcula}
+                style={customDarcula}
               >
                 {codeContent}
               </SyntaxHighlighter>
@@ -120,10 +132,31 @@ const InformationPost = ({ data }) => {
             parsedLines.push(
               <p key={index} dangerouslySetInnerHTML={{ __html: match }} />
             );
+          } else if (match.startsWith("<figure><img")) {
+            // Image
+            const imgElement = new DOMParser()
+              .parseFromString(match, "text/html")
+              .querySelector("img");
+            const srcAttribute = imgElement?.getAttribute("src") || "";
+            const altAttribute = imgElement?.getAttribute("alt") || "";
+
+            if (srcAttribute) {
+              parsedLines.push(
+                <div className="imgContainer">
+                  <img
+                    className="imgStyle"
+                    key={index}
+                    src={srcAttribute}
+                    alt={altAttribute}
+                  />
+                </div>
+              );
+            } else {
+              parsedLines.push(<p key={index}>Image Not Found</p>);
+            }
           }
         });
       }
-
       return parsedLines;
     }
   };
