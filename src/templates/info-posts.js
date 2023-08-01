@@ -88,11 +88,11 @@ const InformationPost = ({ data }) => {
 
   const parseContent = () => {
     if (typeof window !== `undefined`) {
-      //const regex = /(<pre><code\b[^>]*>[\s\S]*?<\/code><\/pre>)|(<p\b[^>]*>[\s\S]*?<\/p>)/gi;
       const regex = /(<pre><code\b[^>]*>[\s\S]*?<\/code><\/pre>)|(<p\b[^>]*>[\s\S]*?<\/p>)|(<figure\b[^>]*>[\s\S]*?<img\b[^>]*>[\s\S]*?<\/figure>)/gi;
       const matches = post.body.match(regex);
       const parsedLines = [];
-
+      console.log("post.body");
+      console.log(post.body);
       if (matches) {
         matches.forEach((match, index) => {
           if (match.startsWith("<pre><code")) {
@@ -112,6 +112,7 @@ const InformationPost = ({ data }) => {
             const codeContent = doc.documentElement.textContent;
             if (
               language === "routeros" ||
+              language === "reasonml" ||
               language === "" ||
               language === " " ||
               language === undefined
@@ -129,9 +130,45 @@ const InformationPost = ({ data }) => {
               </SyntaxHighlighter>
             );
           } else if (match.startsWith("<p")) {
-            parsedLines.push(
-              <p key={index} dangerouslySetInnerHTML={{ __html: match }} />
-            );
+            const paragraph = match;
+            const codeMatches = paragraph.split("<br>");
+            if (codeMatches) {
+              codeMatches.forEach((codeMatch, codeIndex) => {
+                console.log("codeMatch:");
+                console.log(codeMatch);
+                if (codeMatch.startsWith("<code")) {
+                  console.log("I am <code>");
+                  const htmlString = codeMatch.replace(/<\/?code>/gi, "");
+                  const parser = new DOMParser();
+                  const doc = parser.parseFromString(htmlString, "text/html");
+
+                  const codeElement = doc.querySelector("code");
+                  const classAttribute =
+                    codeElement?.getAttribute("class") || "";
+                  let language =
+                    classAttribute?.replace("language-", "") ?? "javascript";
+
+                  const codeContent = doc.documentElement.textContent;
+
+                  parsedLines.push(
+                    <SyntaxHighlighter
+                      key={`${index}-${codeIndex}`}
+                      language={language}
+                      style={customDarcula}
+                    >
+                      {codeContent}
+                    </SyntaxHighlighter>
+                  );
+                } else {
+                  parsedLines.push(
+                    <p
+                      key={index}
+                      dangerouslySetInnerHTML={{ __html: codeMatch }}
+                    />
+                  );
+                }
+              });
+            }
           } else if (match.startsWith("<figure><img")) {
             // Image
             const imgElement = new DOMParser()
