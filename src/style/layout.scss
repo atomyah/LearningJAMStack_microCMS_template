@@ -166,9 +166,8 @@ span.token.operator {
   height:auto;
 }
 .imgStyle{
-  width: auto;
   height: auto;
-  max-width: 100%;
+  max-width: 1108px;
 }
 
 .ulStyle, .olStyle{
@@ -427,11 +426,6 @@ tr.borderStyle{
     padding: 0px;
     height: auto; 
     overflow: scroll; 
-  }
-  .imgStyle {
-    width: auto; 
-    height:auto;
-    display: block;
   }
   .iframeStyle{
     width:355px;
