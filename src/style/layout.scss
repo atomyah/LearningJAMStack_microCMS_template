@@ -144,8 +144,6 @@ Table.info {
 .post-details-body {
   margin-left: 15px;
   display: block;
-  //max-width: 1100px;
-  //overflow: auto;
 }
 .post-details-table p {
   width:auto;
@@ -168,8 +166,45 @@ span.token.operator {
   height:auto;
 }
 .imgStyle{
-  width: 100%;
+  width: auto;
   height: auto;
+  max-width: 100%;
+}
+
+.ulStyle, .olStyle{
+  margin-left: -24px;
+}
+
+.iframeStyle{
+  margin-top: 50px;
+  width:1108px;
+  height:300px;
+}
+
+.postLinkStyle{
+  margin-left: -10px;
+}
+
+.postTable {
+  background-color: #cddeef;
+  border-collapse: collapse !important;
+  height:auto;
+  width:auto;
+  max-width: 1108px;
+}
+.post thead,tbody{
+  border-collapse: collapse !important;
+}
+
+.postTable tr,
+.postTable td,
+.postTable th {
+  border: 1px solid black !important;
+}
+
+.postTable td,.postTable th {
+  min-width: 100px !important;
+  min-height: 15px !important;
 }
 
 /* information.js */
@@ -296,7 +331,19 @@ tr.borderStyle{
   .home-img{
     margin: 1.2% 0% 1.5% 0%;
   }
-
+  .info .back-link-design{
+    width: 40%;
+    margin: 5px 0px 0px -10px;
+  }
+  .info .share-button-container{
+    width: 100%;
+    margin: -22px 70px 0px -10px;
+  }
+  .info-title-obj {
+    font-size: 1rem;
+    padding: 0.4rem;
+    margin: 3% 0% 0% 0%;
+  }
   Table.post-details-table td {
     padding: 5px;
   }
@@ -327,14 +374,6 @@ tr.borderStyle{
     width: 127%;
     margin: 5px 0px 0px -15px;
   }
-  .info .back-link-design{
-    width: 40%;
-    margin: 5px 0px 0px -10px;
-  }
-  .info .share-button-container{
-    width: 100%;
-    margin: -22px 70px 0px -10px;
-  }
   .details-share-button-container {
     width: 109%;
     gap: 0px;
@@ -351,11 +390,6 @@ tr.borderStyle{
   .share-button-container button,
   .details-share-button-container button {
     margin: 5px;
-  }
-  .info-title-obj {
-    font-size: 1rem;
-    padding: 0.4rem;
-    margin: 3% 0% 0% 0%;
   }
   .contact-page {
     height: auto;
@@ -378,7 +412,6 @@ tr.borderStyle{
   }
   .post-details-table p {
     margin: 0;
-    padding: 0.5rem;
   }
   .post-details-table pre {
     overflow-x: auto;
@@ -389,18 +422,30 @@ tr.borderStyle{
     width: 0px;
     height: 0px;
   }
- 
   .imgContainer {
     margin: 0px;
     padding: 0px;
     height: auto; 
     overflow: scroll; 
   }
-  
   .imgStyle {
     width: auto; 
     height:auto;
     display: block;
+  }
+  .iframeStyle{
+    width:355px;
+    overflow: scroll;
+  }
+  .postLinkStyle{
+    margin-left: -10px;
+  }
+  .post-details-table .post-details-body p{
+    margin: 0px !important;
+    padding: 0.5rem 0rem 0.5rem 0rem !important;
+  }
+  .post-details-title-font,.post-details .dateStyle{
+    margin-left: -15px;
   }
 }
 
