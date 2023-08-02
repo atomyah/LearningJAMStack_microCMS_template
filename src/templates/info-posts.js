@@ -6,49 +6,25 @@ import SEO from "../components/seo";
 import Prism from "prismjs";
 import "../style/layout.scss";
 import "prismjs/themes/prism.css";
-
-//import "prismjs/components/prism-arduino";
-//import "prismjs/components/prism-apache";
-
 import "prismjs/components/prism-c";
 import "prismjs/components/prism-css";
 import "prismjs/components/prism-csharp";
-
-// import "prismjs/components/prism-graphql";
-// import "prismjs/components/prism-groovy";
-
-// //import "prismjs/components/prism-html";
-//import "prismjs/components/prism-handlebars";
 import "prismjs/components/prism-haxe";
 import "prismjs/components/prism-haskell";
-
 import "prismjs/components/prism-ini";
-
 import "prismjs/components/prism-json";
 import "prismjs/components/prism-java";
 import "prismjs/components/prism-javascript";
-
 import "prismjs/components/prism-markdown";
-
 import "prismjs/components/prism-objectivec";
-
-// import "prismjs/components/prism-php";
-// //import "prismjs/components/prism-plaintext";
-// //import "prismjs/components/prism-postgresql";
 import "prismjs/components/prism-powershell";
 import "prismjs/components/prism-python";
-
 import "prismjs/components/prism-ruby";
 import "prismjs/components/prism-rust";
-
 import "prismjs/components/prism-scss";
 import "prismjs/components/prism-sql";
-
+import "prismjs/components/prism-stylus";
 import "prismjs/components/prism-typescript";
-
-// import "prismjs/components/prism-vbnet";
-// //import "prismjs/components/prism-vbscript";
-
 import "prismjs/components/prism-yaml";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { darcula } from "react-syntax-highlighter/dist/esm/styles/prism";
@@ -134,9 +110,21 @@ const InformationPost = ({ data }) => {
     );
   };
 
-  const getContentAndLanguage = () => {
-      
-  }
+  const getCodeElements = htmlString => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, "text/html");
+
+    // Extract language from code block comment, e.g., // language: javascript
+    const codeElement = doc.querySelector("code");
+    const classAttribute = codeElement?.getAttribute("class") || "";
+    let language = classAttribute?.replace("language-", "") ?? "javascript";
+    const codeContent = doc.documentElement.textContent;
+
+    return {
+      language: language,
+      codeContent: codeContent,
+    };
+  };
 
   const parseContent = () => {
     if (typeof window !== `undefined`) {
@@ -150,33 +138,25 @@ const InformationPost = ({ data }) => {
             // Handle <pre><code> (multi-line codeblock) tags
             // Extract content within <code> tags
             const htmlString = match.replace(/<\/?pre>|<\/?code>/gi, "");
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(htmlString, "text/html");
-
-            // Extract language from code block comment, e.g., // language: javascript
-            const codeElement = doc.querySelector("code");
-            const classAttribute = codeElement?.getAttribute("class") || "";
-            let language =
-              classAttribute?.replace("language-", "") ?? "javascript";
-            const codeContent = doc.documentElement.textContent;
+            const elements = getCodeElements(htmlString);
 
             if (
-              language === "routeros" ||
-              language === "reasonml" ||
-              language === "" ||
-              language === " " ||
-              language === undefined
+              elements.language === "routeros" ||
+              elements.language === "reasonml" ||
+              elements.language === "" ||
+              elements.language === " " ||
+              elements.language === undefined
             ) {
-              language = "javascript";
+              elements.language = "javascript";
             }
 
             parsedLines.push(
               <SyntaxHighlighter
                 key={index}
-                language={language}
+                language={elements.language}
                 style={customDarcula}
               >
-                {codeContent}
+                {elements.codeContent}
               </SyntaxHighlighter>
             );
           } else if (match.startsWith("<p")) {
@@ -187,24 +167,14 @@ const InformationPost = ({ data }) => {
               codeMatches.forEach((codeMatch, codeIndex) => {
                 if (codeMatch.startsWith("<code")) {
                   const htmlString = codeMatch.replace(/<\/?code>/gi, "");
-                  const parser = new DOMParser();
-                  const doc = parser.parseFromString(htmlString, "text/html");
-
-                  const codeElement = doc.querySelector("code");
-                  const classAttribute =
-                    codeElement?.getAttribute("class") || "";
-                  let language =
-                    classAttribute?.replace("language-", "") ?? "javascript";
-
-                  const codeContent = doc.documentElement.textContent;
-
+                  const elements = getCodeElements(htmlString);
                   parsedLines.push(
                     <SyntaxHighlighter
                       key={`${index}-${codeIndex}`}
-                      language={language}
+                      language={"javascript"}
                       style={customDarcula}
                     >
-                      {codeContent}
+                      {elements.codeContent}
                     </SyntaxHighlighter>
                   );
                 } else {
@@ -254,7 +224,6 @@ const InformationPost = ({ data }) => {
             );
           } else if (match.startsWith("<ul")) {
             // Handle <ul> (unordered list) tags
-            console.log("I am ul");
             const htmlString = match.replace(/<\/?ul>/gi, "");
             parsedLines.push(
               <ul
@@ -329,11 +298,10 @@ const InformationPost = ({ data }) => {
             );
             if (iframeUrl && iframeUrl[1]) {
               const htmlString = iframeUrl[1];
-              console.log(`iframeUrl: ${htmlString}`);
               parsedLines.push(
                 <iframe
                   key={index}
-                  src={htmlString} // Assuming the iframe content is the source URL
+                  src={htmlString}
                   title={`Embedded Content ${index}`}
                   className="iframeStyle"
                 />
@@ -343,7 +311,11 @@ const InformationPost = ({ data }) => {
             // Handle <a> (link) tags
             const htmlString = match.replace(/<\/?a>/gi, "");
             parsedLines.push(
-              <a className="postLinkStyle" key={index} dangerouslySetInnerHTML={{ __html: htmlString }} />
+              <a
+                className="postLinkStyle"
+                key={index}
+                dangerouslySetInnerHTML={{ __html: htmlString }}
+              />
             );
           } else if (match.startsWith("<hr")) {
             // Handle <hr> (horizontal rule) tags
