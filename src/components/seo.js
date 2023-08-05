@@ -67,6 +67,11 @@ function SEO({ description, lang, meta, title }) {
           name: `twitter:description`,
           content: metaDescription,
         },
+         // Google Search Consoleの所有権確認用のメタタグを追加
+         {
+          name: `google-site-verification`,
+          content: `dskrJkYoF-fh1yUbnh14Xpm505iKLRLtSw1cgkDQZks`,
+        },
       ].concat(meta)}
     />
   );
