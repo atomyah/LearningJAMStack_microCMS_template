@@ -183,7 +183,6 @@ span.token.operator {
 }
 
 .postTable {
-  background-color: #cddeef;
   border-collapse: collapse !important;
   height:auto;
   width:auto;
@@ -199,9 +198,17 @@ span.token.operator {
   border: 1px solid black !important;
 }
 
+.postTable tr{
+  min-height: 25px !important;
+}
+
+.postTable th {
+  background-color: #cddeef;
+  height: 25px !important;
+}
+
 .postTable td,.postTable th {
   min-width: 100px !important;
-  min-height: 15px !important;
 }
 
 /* information.js */
