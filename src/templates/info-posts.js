@@ -6,6 +6,7 @@ import SEO from "../components/seo";
 import Prism from "prismjs";
 import "../style/layout.scss";
 import "prismjs/themes/prism.css";
+import "prismjs/components/prism-bash";
 import "prismjs/components/prism-c";
 import "prismjs/components/prism-css";
 import "prismjs/components/prism-csharp";
@@ -45,7 +46,7 @@ const TableRow = ({ rowData }) => {
     <tr>
       {rowData.map((data, index) => (
         <td key={index}>
-          <p>{data}</p>
+          {data}
         </td>
       ))}
     </tr>
@@ -96,7 +97,7 @@ const InformationPost = ({ data }) => {
           <tr>
             {headerRow.map((header, index) => (
               <th key={index}>
-                <p>{header}</p>
+                {header}
               </th>
             ))}
           </tr>
