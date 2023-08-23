@@ -29,6 +29,7 @@ import "prismjs/components/prism-typescript";
 import "prismjs/components/prism-yaml";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { darcula } from "react-syntax-highlighter/dist/esm/styles/prism";
+import ReactHtmlParser from "react-html-parser";
 
 import {
   FacebookShareButton,
@@ -41,75 +42,37 @@ import {
   EmailIcon,
 } from "react-share";
 
-const TableRow = ({ rowData }) => {
+const customDarcula = {
+  ...darcula,
+  'code[class*="language-"]': {
+    ...darcula['code[class*="language-"]'],
+    textShadow: "none",
+    fontSize: "16px",
+    background: "black",
+  },
+  "@media (max-width: 767px)": {
+    'code[class*="language-"]': {
+      fontSize: "14px",
+      backgroundColor: "black",
+    },
+  },
+};
+
+const CustomSyntaxHighlighter = ({ language, children }) => {
   return (
-    <tr>
-      {rowData.map((data, index) => (
-        <td key={index}>
-          {data}
-        </td>
-      ))}
-    </tr>
+    <SyntaxHighlighter language={language} style={customDarcula}>
+      {children}
+    </SyntaxHighlighter>
   );
 };
 
 const InformationPost = ({ data }) => {
   const [shareUrl, setShareUrl] = useState("");
 
-  const customDarcula = {
-    ...darcula,
-    'code[class*="language-"]': {
-      ...darcula['code[class*="language-"]'],
-      textShadow: "none",
-      fontSize: "16px",
-    },
-    "@media (max-width: 767px)": {
-      'code[class*="language-"]': {
-        fontSize: "14px",
-      },
-    },
-  };
-
   useEffect(() => {
     setShareUrl(window.location.href);
     Prism.highlightAll();
   }, []);
-
-  const parseTable = tableString => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(tableString, "text/html");
-
-    const rows = Array.from(doc.querySelectorAll("tr")).map(row => {
-      return Array.from(row.querySelectorAll("td, th")).map(
-        cell => cell.textContent
-      );
-    });
-
-    return rows;
-  };
-
-  const renderTable = tableData => {
-    const headerRow = tableData.shift(); // Remove the first row (header) from the data
-
-    return (
-      <table className="postTable">
-        <thead>
-          <tr>
-            {headerRow.map((header, index) => (
-              <th key={index}>
-                {header}
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {tableData.map((rowData, index) => (
-            <TableRow key={index} rowData={rowData} />
-          ))}
-        </tbody>
-      </table>
-    );
-  };
 
   const getCodeElements = htmlString => {
     const parser = new DOMParser();
@@ -127,18 +90,27 @@ const InformationPost = ({ data }) => {
     };
   };
 
-  const parseContent = () => {
-    if (typeof window !== `undefined`) {
-      const regex = /(<pre><code\b[^>]*>[\s\S]*?<\/code><\/pre>)|(<p\b[^>]*>[\s\S]*?<\/p>)|(<figure\b[^>]*>[\s\S]*?<img\b[^>]*>[\s\S]*?<\/figure>)|(<h[1-6]\b[^>]*>[\s\S]*?<\/h[1-6]>)|<b\b[^>]*>[\s\S]*?<\/b>|<i\b[^>]*>[\s\S]*?<\/i>|<u\b[^>]*>[\s\S]*?<\/u>|<table\b[^>]*>[\s\S]*?<\/table>|<ul\b[^>]*>[\s\S]*?<\/ul>|<ol\b[^>]*>[\s\S]*?<\/ol>|<li\b[^>]*>[\s\S]*?<\/li>|<strike\b[^>]*>[\s\S]*?<\/strike>|<blockquote\b[^>]*>[\s\S]*?<\/blockquote>|<div class="iframely-embed">[\s\S]*?<\/div>|<a\b[^>]*>[\s\S]*?<\/a>|<hr\b[^>]*>|<br\b[^>]*>/gi;
-      const matches = post.body.match(regex);
-      const parsedLines = [];
+  const parseContent = bodyContents => {
+    const tableClass = "postTable";
 
-      if (matches) {
-        matches.forEach((match, index) => {
-          if (match.startsWith("<pre><code")) {
-            // Handle <pre><code> (multi-line codeblock) tags
-            // Extract content within <code> tags
-            const htmlString = match.replace(/<\/?pre>|<\/?code>/gi, "");
+    const options = {
+      transform: (node, index) => {
+        if (
+          node.type === "text" &&
+          node.parent &&
+          node.parent.name !== "code"
+        ) {
+          return <React.Fragment key={index}>{node.data}</React.Fragment>;
+        }
+      },
+      replace: domNode => {
+        if (domNode.name === "pre") {
+          const codeElement = domNode.children.find(
+            child => child.name === "code"
+          );
+
+          if (codeElement) {
+            const htmlString = codeElement.children[0].data;
             const elements = getCodeElements(htmlString);
 
             if (
@@ -151,184 +123,90 @@ const InformationPost = ({ data }) => {
               elements.language = "javascript";
             }
 
-            parsedLines.push(
-              <SyntaxHighlighter
-                key={index}
-                language={elements.language}
-                style={customDarcula}
-              >
+            return (
+              <CustomSyntaxHighlighter language={elements.language}>
                 {elements.codeContent}
-              </SyntaxHighlighter>
+              </CustomSyntaxHighlighter>
             );
-          } else if (match.startsWith("<p")) {
-            // Handle <p> (paragraph) tags
-            const paragraph = match;
-            const codeMatches = paragraph.split("<br>");
-            if (codeMatches) {
-              codeMatches.forEach((codeMatch, codeIndex) => {
-                if (codeMatch.startsWith("<code")) {
-                  const htmlString = codeMatch.replace(/<\/?code>/gi, "");
-                  const elements = getCodeElements(htmlString);
-                  parsedLines.push(
-                    <SyntaxHighlighter
-                      key={`${index}-${codeIndex}`}
-                      language={"javascript"}
-                      style={customDarcula}
-                    >
-                      {elements.codeContent}
-                    </SyntaxHighlighter>
-                  );
-                } else {
-                  parsedLines.push(
-                    <p
-                      key={index}
-                      dangerouslySetInnerHTML={{ __html: codeMatch }}
-                    />
-                  );
-                }
-              });
-            }
-          } else if (match.startsWith("<figure><img")) {
-            // Handle <img>(Image) tags
-            const imgElement = new DOMParser()
-              .parseFromString(match, "text/html")
-              .querySelector("img");
-            const srcAttribute = imgElement?.getAttribute("src") || "";
-            const altAttribute = imgElement?.getAttribute("alt") || "";
+          }
+        } else if (domNode.name === "code") {
+          const htmlString = domNode.children[0].data;
+          const elements = getCodeElements(htmlString);
 
-            if (srcAttribute) {
-              parsedLines.push(
-                <div className="imgContainer">
-                  <img
-                    className="imgStyle"
-                    key={index}
-                    src={srcAttribute}
-                    alt={altAttribute}
-                  />
+          return (
+            <CustomSyntaxHighlighter language={elements.language}>
+              {elements.codeContent}
+            </CustomSyntaxHighlighter>
+          );
+        } else if (domNode.name === "p") {
+          const codeMatches = domNode.children.filter(
+            child =>
+              child.type === "tag" &&
+              child.name === "code" &&
+              child.children.length > 0 &&
+              child.children[0].type === "text"
+          );
+
+          if (codeMatches.length > 0) {
+            const codeContent = codeMatches
+              .map(codeMatch => codeMatch.children[0].data)
+              .join("\n");
+
+            return (
+              <CustomSyntaxHighlighter language="javascript">
+                {codeContent}
+              </CustomSyntaxHighlighter>
+            );
+          }
+        } else if (domNode.name === "table") {
+          const tableContent = ReactHtmlParser(domNode.outerHTML);
+          return React.cloneElement(tableContent, {
+            className: tableClass,
+          });
+        } else if (domNode.name === "br") {
+          return <div dangerouslySetInnerHTML={<br />} />;
+        } else if (domNode.name.match(/^h[1-6]/i)) {
+          const headingLevel = Number(domNode.name.charAt(1)); // Extract heading level
+          return (
+            <React.Fragment key={domNode.index}>
+              <br key={"break"} />
+              {React.createElement(`h${headingLevel}`, {
+                key: domNode.index, // You need to provide the appropriate index here
+                dangerouslySetInnerHTML: { __html: domNode.innerHTML }, // Use innerHTML to preserve the heading's HTML content
+              })}
+            </React.Fragment>
+          );
+        } else if (
+          domNode.name === "div" &&
+          domNode.attribs.class === "iframely-embed"
+        ) {
+          const iframeDiv = domNode.querySelector(".iframely-responsive");
+          if (iframeDiv) {
+            const anchorElement = iframeDiv.querySelector(
+              "a[data-iframely-url]"
+            );
+            if (anchorElement) {
+              const iframeUrl = anchorElement.getAttribute("data-iframely-url");
+              return (
+                <div key={domNode.index} className="iframe-container">
+                  <iframe src={iframeUrl} className="iframeStyle" />
                 </div>
               );
-            } else {
-              parsedLines.push(<p key={index}>Image Not Found</p>);
             }
-          } else if (match.match(/^<h[1-6]/)) {
-            // Handle <h>(h1~h6) tags
-            const headingLevel = match.charAt(2); // Get the heading level (1 to 6)
-            const htmlString = match.replace(
-              new RegExp(`<\/?h${headingLevel}>`, "gi"),
-              ""
-            );
-            parsedLines.push(
-              React.createElement(`h${headingLevel}`, {
-                key: index,
-                dangerouslySetInnerHTML: { __html: htmlString },
-              })
-            );
-          } else if (match.startsWith("<ul")) {
-            // Handle <ul> (unordered list) tags
-            const htmlString = match.replace(/<\/?ul>/gi, "");
-            parsedLines.push(
-              <ul
-                key={index}
-                dangerouslySetInnerHTML={{ __html: htmlString }}
-                className="ulStyle"
-              />
-            );
-          } else if (match.startsWith("<li")) {
-            // Handle <li> (list item) tags
-            const htmlString = match.replace(/<\/?li>/gi, "");
-            parsedLines.push(
-              <li
-                key={index}
-                dangerouslySetInnerHTML={{ __html: htmlString }}
-              />
-            );
-          } else if (match.startsWith("<ol")) {
-            // Handle <ol> (ordered list) tags
-            const htmlString = match.replace(/<\/?ol>/gi, "");
-            parsedLines.push(
-              <ol
-                key={index}
-                dangerouslySetInnerHTML={{ __html: htmlString }}
-                className="olStyle"
-              />
-            );
-          } else if (match.startsWith("<u")) {
-            // Handle <u> (underline) tags
-            const htmlString = match.replace(/<\/?u>/gi, "");
-            parsedLines.push(
-              <u key={index} dangerouslySetInnerHTML={{ __html: htmlString }} />
-            );
-          } else if (match.startsWith("<b")) {
-            // Handle <b> (bold) tags
-            const htmlString = match.replace(/<\/?b>/gi, "");
-            parsedLines.push(
-              <b key={index} dangerouslySetInnerHTML={{ __html: htmlString }} />
-            );
-          } else if (match.startsWith("<strike")) {
-            // Handle <strike> (strikethrough) tags
-            const htmlString = match.replace(/<\/?strike>/gi, "");
-            parsedLines.push(
-              <strike
-                key={index}
-                dangerouslySetInnerHTML={{ __html: htmlString }}
-              />
-            );
-          } else if (match.startsWith("<i")) {
-            // Handle <i> (italic) tags
-            const htmlString = match.replace(/<\/?i>/gi, "");
-            parsedLines.push(
-              <i key={index} dangerouslySetInnerHTML={{ __html: htmlString }} />
-            );
-          } else if (match.startsWith("<table")) {
-            // Handle <table> tags
-            const tableData = parseTable(match); // Call a function to extract table data
-            parsedLines.push(renderTable(tableData));
-          } else if (match.startsWith("<blockquote")) {
-            // Handle <blockquote> tags
-            const htmlString = match.replace(/<\/?blockquote>/gi, "");
-            parsedLines.push(
-              <blockquote
-                key={index}
-                dangerouslySetInnerHTML={{ __html: htmlString }}
-              />
-            );
-          } else if (match.startsWith('<div class="iframely-embed"')) {
-            // Handle <iframe> tags
-            const iframeUrl = match.match(
-              /<a\b[^>]*href="([^"]+)"[^>]*>[\s\S]*?<\/a>/i
-            );
-            if (iframeUrl && iframeUrl[1]) {
-              const htmlString = iframeUrl[1];
-              parsedLines.push(
-                <iframe
-                  key={index}
-                  src={htmlString}
-                  title={`Embedded Content ${index}`}
-                  className="iframeStyle"
-                />
-              );
-            }
-          } else if (match.startsWith("<a")) {
-            // Handle <a> (link) tags
-            const htmlString = match.replace(/<\/?a>/gi, "");
-            parsedLines.push(
-              <a
-                className="postLinkStyle"
-                key={index}
-                dangerouslySetInnerHTML={{ __html: htmlString }}
-              />
-            );
-          } else if (match.startsWith("<hr")) {
-            // Handle <hr> (horizontal rule) tags
-            parsedLines.push(<hr key={index} />);
-          } else if (match.startsWith("<br")) {
-            // Handle <br> (line break) tags
-            parsedLines.push(<br key={index} />);
           }
-        });
-      }
-      return parsedLines;
-    }
+        }
+      },
+    };
+
+    const parsedContent = ReactHtmlParser(bodyContents, options);
+
+    return (
+      <div className="post-details-body">
+        {parsedContent.map((element, index) => (
+          <React.Fragment key={index}>{element}</React.Fragment>
+        ))}
+      </div>
+    );
   };
 
   const post = data.microcmsInformation;
@@ -360,7 +238,7 @@ const InformationPost = ({ data }) => {
           <Row className="adjust-Row">
             <Col className="space"></Col>
           </Row>
-          <Row className="post-details-body">{parseContent(customDarcula)}</Row>
+          <Row className="post-details-body">{parseContent(post.body)}</Row>
           <Row>
             <Col className="space"></Col>
           </Row>
