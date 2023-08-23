@@ -143,13 +143,26 @@ Table.info {
   margin-left: 15px;
   display: block;
 }
+.table td,.table th{
+  border: 1px solid #dee2e6 !important;
+}
+.table th{
+  background-color: #cccccc40;
+}
+
 .post-details-table p {
   width:auto;
 }
 .post-details-table pre {
-  width: auto; 
-  margin: 0; 
+  max-width: 1108px; 
+  margin: 0.5rem 0rem; 
   color: #fff !important;
+  padding: 1em;
+  background: #000000;
+
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 span.token.operator {
   background-color: transparent !important;
@@ -209,6 +222,10 @@ span.token.operator {
 
 .postTable td,.postTable th {
   min-width: 100px !important;
+}
+
+.token.operator, .token.entity, .token.url, .language-css .token.string, .style .token.string {
+  background: none !important;
 }
 
 /* information.js */
@@ -330,6 +347,23 @@ tr.borderStyle{
   justify-content: flex-end;
 }
 
+:not(pre) > code[class*="language-"], pre[class*="language-"] {
+  background: #000000 !important;
+}
+
+code{
+  background: #000000;
+  text-shadow: none !important;
+  font-size: 16px !important;
+  color: #fff !important;
+}
+
+code[class*="language-"], pre[class*="language-"] {
+  text-shadow: none !important;
+  font-size: 16px !important;
+  color: white !important;
+}
+
 /* Media Query for Mobile Devices */
 @media (max-width: 767px) {
   .home-img{
@@ -421,6 +455,8 @@ tr.borderStyle{
     overflow-x: auto;
     white-space: pre-wrap;
     word-wrap: break-word;
+    padding: 1em;
+    background: #000000;
   }
   .adjust-Row {
     width: 0px;
