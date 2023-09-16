@@ -6,25 +6,13 @@ module.exports = {
     siteUrl: `https://devpediacode.com`,
   },
   plugins: [
-    // sitemapプラグインの設定
-    // `gatsby-plugin-sitemap`,
-    // {
-    //   // canonical URLsプラグインの設定
-    //   resolve: `gatsby-plugin-canonical-urls`,
-    //   options: {
-    //     // サイトのURL
-    //     siteUrl: `https://devpediacode.com`,
-    //     // URLからクエリストリングを除去
-    //     stripQueryString: true,
-    //   },
-    // },
     {
       resolve: `gatsby-plugin-google-analytics`,
       options: {
         // The property ID; the tracking code won't be generated without it
         trackingId: "G-7RYQZ5JFJR",
         // Defines where to place the tracking script - `true` in the head and `false` in the body
-        head: false,
+        head: true,
         // Setting this parameter is optional
         anonymize: true,
         // Setting this parameter is also optional
@@ -49,28 +37,7 @@ module.exports = {
         enableWebVitalsTracking: true,
       },
    },
-    /*
-   {
-    resolve: `gatsby-plugin-google-gtag`,
-    options: {
-      // GoogleのIDを設定
-      trackingIds: [
-        "G-7RYQZ5JFJR", // Google Analytics / GA
-      ],
-      // 追加設定を指定
-      gtagConfig: {
-        anonymize_ip: true,
-        cookie_expires: 0,
-      },
-      pluginConfig: {
-        // ページビューイベントをトリガー
-        head: false,
-        respectDNT: true,
-        exclude: ["/preview/**", "/do-not-track/me/too/"],
-      },
-    },
-  },
-   */
+ 
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-microcms`,
