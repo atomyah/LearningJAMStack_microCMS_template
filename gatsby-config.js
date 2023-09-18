@@ -45,7 +45,7 @@ module.exports = {
         head: true  // headタグに記載されるようにコンフィグを設定します。
       }
     }
-  }
+  },
     `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-microcms`,
